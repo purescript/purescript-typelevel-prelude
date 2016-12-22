@@ -14,7 +14,6 @@ module Type.Data.Ordering
   ) where
 
 import Data.Ordering (Ordering(..))
-import Unsafe.Coerce (unsafeCoerce)
 
 foreign import kind Ordering
 foreign import data LT :: Ordering
@@ -34,11 +33,9 @@ instance isOrderingGT :: IsOrdering GT where reflectOrdering _ = GT
 
 -- | Use a value level `Ordering` as a type-level `Ordering`
 reifyOrdering :: forall r. Ordering -> (forall o. IsOrdering o => OProxy o -> r) -> r
-reifyOrdering o f = coerce f { reflectOrdering: \_ -> o } OProxy where
-  coerce
-    :: (forall o'. IsOrdering o'                      => OProxy o' -> r)
-    -> { reflectOrdering :: OProxy EQ -> Ordering } -> OProxy EQ -> r
-  coerce = unsafeCoerce
+reifyOrdering LT f = f (OProxy :: OProxy LT)
+reifyOrdering EQ f = f (OProxy :: OProxy EQ)
+reifyOrdering GT f = f (OProxy :: OProxy GT)
 
 -- | Append two `Ordering` types together
 -- | Reflective of the semigroup for value level `Ordering`
