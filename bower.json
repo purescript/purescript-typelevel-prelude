@@ -1,0 +1,21 @@
+{
+  "name": "purescript-typelevel-prelude",
+  "homepage": "https://github.com/purescript/purescript-typelevel-prelude",
+  "description": "Types and kinds for basic type-level programming",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/purescript/purescript-typelevel-prelude.git"
+  },
+  "ignore": [
+    "**/.*",
+    "bower_components",
+    "node_modules",
+    "output",
+    "bower.json",
+    "package.json"
+  ],
+  "dependencies": {
+    "purescript-proxy": "^1.0.0"
+  }
+}
