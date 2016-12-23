@@ -4,6 +4,8 @@
 
 Types and kinds for basic type-level programming
 
+_Note_: this library is a work in progress, and depends on compiler features which have not been officially released yet.
+
 ## Installation
 
 ```
