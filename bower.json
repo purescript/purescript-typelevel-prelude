@@ -16,11 +16,8 @@
     "package.json"
   ],
   "dependencies": {
-    "purescript-proxy": "^1.0.0",
-    "purescript-symbols": "^2.0.0",
-    "purescript-type-equality": "^1.0.0"
-  },
-  "devDependencies": {
-    "purescript-psci-support": "^2.0.0"
+    "purescript-proxy": "^2.0.0",
+    "purescript-symbols": "^3.0.0",
+    "purescript-type-equality": "^2.0.0"
   }
 }
