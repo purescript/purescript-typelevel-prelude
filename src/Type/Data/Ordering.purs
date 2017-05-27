@@ -11,9 +11,12 @@ module Type.Data.Ordering
   , appendOrdering
   , class InvertOrdering
   , invertOrdering
+  , class Equals
+  , equals
   ) where
 
 import Data.Ordering (Ordering(..))
+import Type.Data.Boolean (kind Boolean, True, False, BProxy(..))
 
 foreign import kind Ordering
 foreign import data LT :: Ordering
@@ -60,3 +63,22 @@ instance invertOrderingGT :: InvertOrdering GT LT
 
 invertOrdering :: forall i o. InvertOrdering i o => OProxy i -> OProxy o
 invertOrdering _ = OProxy
+
+class Equals (lhs :: Ordering)
+             (rhs :: Ordering)
+             (out :: Boolean) |
+             lhs rhs -> out
+
+instance equalsEQEQ :: Equals EQ EQ True
+instance equalsLTLT :: Equals LT LT True
+instance equalsGTGT :: Equals GT GT True
+instance equalsEQLT :: Equals EQ LT False
+instance equalsEQGT :: Equals EQ GT False
+instance equalsLTEQ :: Equals LT EQ False
+instance equalsLTGT :: Equals LT GT False
+instance equalsGTLT :: Equals GT LT False
+instance equalsGTEQ :: Equals GT EQ False
+
+equals :: forall l r o. Equals l r o => OProxy l -> OProxy r -> BProxy o
+equals _ _ = BProxy
+
