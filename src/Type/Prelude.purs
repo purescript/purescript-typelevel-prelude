@@ -4,6 +4,7 @@ module Type.Prelude
   , module Type.Data.Symbol
   , module Type.Equality
   , module Type.Proxy
+  , module Type.Row
   ) where
 
 import Type.Data.Boolean (kind Boolean, True, False, BProxy(..), class IsBoolean, reflectBoolean, reifyBoolean)
@@ -11,3 +12,5 @@ import Type.Data.Ordering (kind Ordering, LT, EQ, GT, OProxy(..), class IsOrderi
 import Type.Proxy (Proxy(..))
 import Type.Data.Symbol (SProxy(..), class IsSymbol, reflectSymbol, reifySymbol, class CompareSymbol, compareSymbol, class AppendSymbol, appendSymbol)
 import Type.Equality (class TypeEquals, from, to)
+import Type.Row (class RowLacks)
+
