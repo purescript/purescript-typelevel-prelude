@@ -1,6 +1,11 @@
 module Type.Row
   ( class RowLacks
   , class RowLacking
+  , kind RowList
+  , Nil
+  , Cons
+  , class RowToList
+  , class ListToRow
   ) where
 
 -- Must not be exported
@@ -32,3 +37,30 @@ instance rowLacks
      , RowLacking Entry key typ row )
   => RowLacks key row
 
+
+-- | A type-level list representation of a row
+foreign import kind RowList
+foreign import data Nil :: RowList
+foreign import data Cons :: Symbol -> Type -> RowList -> RowList
+
+-- | Extract the collection of entries in a closed row of types.
+-- | The list of entries is sorted by label and preserves duplicates.
+-- | The inverse of this operation is `ListToRow`.
+-- | Solved by the compiler.
+class RowToList (row :: # Type)
+                (list :: RowList) |
+                row -> list
+
+-- | Convert a RowList to a row of types.
+-- | The inverse of this operation is `RowToList`.
+class ListToRow (list :: RowList)
+                (row :: # Type) |
+                list -> row
+
+instance listToRowNil
+  :: ListToRow Nil ()
+
+instance listToRowCons
+  :: ( ListToRow tail tailRow
+     , RowCons label ty tailRow row )
+  => ListToRow (Cons label ty tail) row
