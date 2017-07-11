@@ -45,7 +45,7 @@ class And (lhs :: Boolean)
 instance andTrue :: And True rhs rhs
 instance andFalse :: And False rhs False
 
-and :: forall l r o. BProxy l -> BProxy r -> BProxy o
+and :: forall l r o. And l r o => BProxy l -> BProxy r -> BProxy o
 and _ _ = BProxy
 
 -- | Or two `Boolean` types together
