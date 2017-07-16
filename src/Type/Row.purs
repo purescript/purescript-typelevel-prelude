@@ -1,12 +1,16 @@
 module Type.Row
-  ( class RowLacks
+  ( RProxy(..)
+  , class RowLacks
   , class RowLacking
   , kind RowList
   , Nil
   , Cons
+  , RLProxy(..)
   , class RowToList
   , class ListToRow
   ) where
+
+data RProxy (row :: # Type) = RProxy
 
 -- Must not be exported
 foreign import data Entry :: Type
@@ -42,6 +46,8 @@ instance rowLacks
 foreign import kind RowList
 foreign import data Nil :: RowList
 foreign import data Cons :: Symbol -> Type -> RowList -> RowList
+
+data RLProxy (rowList :: RowList) = RLProxy
 
 -- | Extract the collection of entries in a closed row of types.
 -- | The list of entries is sorted by label and preserves duplicates.
