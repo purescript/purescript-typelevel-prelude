@@ -57,7 +57,7 @@ class RowToList (row :: # Type)
                 (list :: RowList) |
                 row -> list
 
--- | Convert a RowList to a row of types.
+-- | Convert a `RowList` to a row of types.
 -- | The inverse of this operation is `RowToList`.
 class ListToRow (list :: RowList)
                 (row :: # Type) |
@@ -70,3 +70,16 @@ instance listToRowCons
   :: ( ListToRow tail tailRow
      , RowCons label ty tailRow row )
   => ListToRow (Cons label ty tail) row
+
+-- | Obtain the label and type from a singleton row. The functional
+-- | dependencies on `RowCons` mean that it cannot solve this instance, so this
+-- | provides that evidence for that.
+class ( RowCons label typ () row ) <= RowSingleton (label :: Symbol)
+                                                   (typ :: Type)
+                                                   (row :: # Type) |
+                                                   row -> label typ
+
+instance rowSingleton
+  :: ( RowToList row (Cons label typ Nil)
+     , RowCons label typ () row )
+  => RowSingleton label typ row
