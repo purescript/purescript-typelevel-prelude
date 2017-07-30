@@ -77,7 +77,7 @@ instance listToRowCons
 class ( RowCons label typ () row ) <= RowSingleton (label :: Symbol)
                                                    (typ :: Type)
                                                    (row :: # Type) |
-                                                   row -> label typ
+                                                   -> label typ row
 
 instance rowSingleton
   :: ( RowToList row (Cons label typ Nil)
