@@ -8,6 +8,7 @@ module Type.Row
   , RLProxy(..)
   , class RowToList
   , class ListToRow
+  , class RowSingleton
   ) where
 
 data RProxy (row :: # Type) = RProxy
