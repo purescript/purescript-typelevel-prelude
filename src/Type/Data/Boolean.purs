@@ -16,8 +16,6 @@ module Type.Data.Boolean
   , if_
   ) where
 
-import Type.Proxy (Proxy(..))
-
 foreign import kind Boolean
 foreign import data True :: Boolean
 foreign import data False :: Boolean
@@ -74,9 +72,12 @@ class If (bool :: Boolean)
          (onTrue :: Type)
          (onFalse :: Type)
          (output :: Type) |
-         bool -> onTrue onFalse output
-instance ifTrue :: If True onTrue onFalse onTrue
-instance ifFalse :: If False onTrue onFalse onFalse
+         bool -> onTrue onFalse output where
+  if_ :: BProxy bool -> onTrue -> onFalse -> output
 
-if_ :: forall b t e o. If b t e o => BProxy b -> Proxy t -> Proxy e -> Proxy o
-if_ _ _ _ = Proxy
+instance ifTrue :: If True onTrue onFalse onTrue where
+  if_ _ onTrue _ = onTrue
+
+instance ifFalse :: If False onTrue onFalse onFalse where
+  if_ _ _ onFalse = onFalse
+
