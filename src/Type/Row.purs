@@ -10,6 +10,10 @@ module Type.Row
   , class ListToRow
   ) where
 
+
+import Type.Equality (class TypeEquals)
+
+
 data RProxy (row :: # Type) = RProxy
 
 -- Must not be exported
@@ -70,3 +74,17 @@ instance listToRowCons
   :: ( ListToRow tail tailRow
      , RowCons label ty tailRow row )
   => ListToRow (Cons label ty tail) row
+
+
+class Homogeneous (row :: # Type) fieldType
+instance homogeneous
+  :: ( RowToList row fields
+     , FieldOf fields fieldType )
+  => Homogeneous row fieldType
+
+class FieldOf (rowList :: RowList) fieldType | rowList -> fieldType
+instance fieldOfCons
+  :: ( FieldOf tail fieldType
+     , TypeEquals fieldType fieldType2 )
+  => FieldOf (Cons symbol fieldType tail) fieldType2
+instance fieldOfNil :: FieldOf Nil fieldType
