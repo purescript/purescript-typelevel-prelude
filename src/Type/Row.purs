@@ -8,6 +8,7 @@ module Type.Row
   , RLProxy(..)
   , class RowToList
   , class ListToRow
+  , class SubRow
   ) where
 
 data RProxy (row :: # Type) = RProxy
@@ -70,3 +71,9 @@ instance listToRowCons
   :: ( ListToRow tail tailRow
      , RowCons label ty tailRow row )
   => ListToRow (Cons label ty tail) row
+
+-- | SubRow class can be used to constrain that one row is a sub-row of another
+-- | one.
+class SubRow (r :: # Type) (s :: # Type)
+
+instance subrow :: Union r t s => SubRow r s
