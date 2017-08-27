@@ -16,6 +16,10 @@ module Type.Data.Boolean
   , if_
   ) where
 
+import Prelude (id)
+import Type.Equality (class TypeEquals, to)
+import Unsafe.Coerce (unsafeCoerce)
+
 foreign import kind Boolean
 foreign import data True :: Boolean
 foreign import data False :: Boolean
@@ -73,11 +77,46 @@ class If (bool :: Boolean)
          (onFalse :: Type)
          (output :: Type) |
          bool -> onTrue onFalse output where
-  if_ :: BProxy bool -> onTrue -> onFalse -> output
+  if_ :: BProxy bool ->
+         ( TypeEquals (BProxy bool) (BProxy True) =>
+           TypeEquals onTrue output =>
+           onTrue ) ->
+         ( TypeEquals (BProxy bool) (BProxy False) =>
+           TypeEquals onFalse output =>
+           onFalse) ->
+         output
 
-instance ifTrue :: If True onTrue onFalse onTrue where
-  if_ _ onTrue _ = onTrue
+instance ifTrue ::
+  TypeEquals onTrue output =>
+  If True onTrue onFalse output
+  where
+    if_ _ onTrue _ = to onTrue
 
-instance ifFalse :: If False onTrue onFalse onFalse where
-  if_ _ _ onFalse = onFalse
+instance ifFalse ::
+  TypeEquals onFalse output =>
+  If False onTrue onFalse output
+  where
+    if_ _ _ onFalse = to onFalse
+
+-- TODO: Remove example & imports
+
+newtype Leibniz a b = Leibniz (forall f. f a -> f b)
+leibnizEq :: forall a b. TypeEquals a b => Leibniz a b
+leibnizEq = unsafeCoerce (Leibniz id)
+
+foo :: forall l r lr o.
+  And l r lr =>
+  If lr (Leibniz (BProxy lr) (BProxy True)) String o =>
+  BProxy l ->
+  BProxy r ->
+  o
+
+-- fails
+--foo l r = if_ (and l r) leibnizEq "Hello"
+
+-- works
+foo l r = if_ (and l r :: BProxy lr) leibnizEq "Hello"
+
+-- works
+--foo l r = let xs = and l r in if_ xs leibnizEq "Hello"
 
