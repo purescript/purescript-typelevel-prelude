@@ -6,6 +6,8 @@ module Type.Data.Symbol
   , appendSymbol
   , class Equals
   , equals
+  , class ConsSymbol
+  , consSymbol
   ) where
 
 import Data.Symbol (SProxy(..), class IsSymbol, reflectSymbol, reifySymbol)
@@ -31,6 +33,14 @@ class AppendSymbol (lhs :: Symbol)
 
 appendSymbol :: forall l r o. AppendSymbol l r o => SProxy l -> SProxy r -> SProxy o
 appendSymbol _ _ = SProxy
+
+class ConsSymbol (head :: Symbol)
+                 (tail :: Symbol)
+                 (sym :: Symbol) |
+                 sym -> head tail, head tail -> sym
+
+consSymbol :: forall h t s. ConsSymbol h t s => SProxy s -> {head :: SProxy h, tail :: SProxy t}
+consSymbol _ = {head : SProxy, tail : SProxy}
 
 class Equals (lhs :: Symbol)
              (rhs :: Symbol)
