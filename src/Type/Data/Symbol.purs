@@ -7,7 +7,7 @@ module Type.Data.Symbol
   , class Equals
   , equals
   , class ConsSymbol
-  , consSymbol
+  , unconsSymbol
   ) where
 
 import Data.Symbol (SProxy(..), class IsSymbol, reflectSymbol, reifySymbol)
@@ -39,8 +39,8 @@ class ConsSymbol (head :: Symbol)
                  (sym :: Symbol) |
                  sym -> head tail, head tail -> sym
 
-consSymbol :: forall h t s. ConsSymbol h t s => SProxy s -> {head :: SProxy h, tail :: SProxy t}
-consSymbol _ = {head : SProxy, tail : SProxy}
+unconsSymbol :: forall h t s. ConsSymbol h t s => SProxy s -> {head :: SProxy h, tail :: SProxy t}
+unconsSymbol _ = {head : SProxy, tail : SProxy}
 
 class Equals (lhs :: Symbol)
              (rhs :: Symbol)
