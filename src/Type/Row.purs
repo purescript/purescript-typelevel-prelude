@@ -76,7 +76,7 @@ instance listToRowCons
   => ListToRow (Cons label ty tail) row
 
 -- | Ensure that every field in a row has the same type.
-class Homogeneous (row :: # Type) fieldType
+class Homogeneous (row :: # Type) fieldType | row -> fieldType
 instance homogeneous
   :: ( RowToList row fields
      , FieldOf fields fieldType )
