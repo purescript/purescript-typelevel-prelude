@@ -8,7 +8,14 @@ module Type.Row
   , RLProxy(..)
   , class RowToList
   , class ListToRow
+  , class RowLabels
+  , labels
+  , labelsR
   ) where
+
+
+import Prelude ((<>))
+import Type.Data.Symbol (class IsSymbol, SProxy(..), reflectSymbol)
 
 data RProxy (row :: # Type) = RProxy
 
@@ -70,3 +77,29 @@ instance listToRowCons
   :: ( ListToRow tail tailRow
      , RowCons label ty tailRow row )
   => ListToRow (Cons label ty tail) row
+
+class RowLabels (l :: RowList) where
+  labels
+    :: RLProxy l
+    -> Array String
+
+instance getLabelsNil :: RowLabels Nil where
+  labels _ = []
+
+instance getLabelsCons
+  :: ( IsSymbol name
+     , RowLabels tail
+     )
+  => RowLabels (Cons name ty tail) where
+  labels _ = cons (reflectSymbol (SProxy :: SProxy name)) (labels (RLProxy :: RLProxy tail))
+    where
+      cons x xs = [x] <> xs
+
+labelsR
+  :: forall r l
+   . RowToList r l
+  => ListToRow l r
+  => RowLabels l
+  => RProxy r
+  -> Array String
+labelsR _ = labels (RLProxy :: RLProxy l)
