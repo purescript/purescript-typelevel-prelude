@@ -86,19 +86,248 @@ class RowLabels (l :: RowList) where
 instance getLabelsNil :: RowLabels Nil where
   labels _ = []
 
+instance getLabelsCons1
+  :: ( IsSymbol name1 )
+  => RowLabels (Cons name1 ty1 Nil) where
+  labels _ = [reflectSymbol (SProxy :: SProxy name1)]
+instance getLabelsCons2
+  :: ( IsSymbol name1
+     , IsSymbol name2 )
+  => RowLabels (Cons name1 ty1 (Cons name2 ty2 Nil)) where
+  labels _ =
+    [ reflectSymbol (SProxy :: SProxy name1)
+    , reflectSymbol (SProxy :: SProxy name2)
+    ]
+instance getLabelsCons3
+  :: ( IsSymbol name1
+     , IsSymbol name2
+     , IsSymbol name3 )
+  => RowLabels
+      (Cons name1 ty1
+        (Cons name2 ty2
+          (Cons name3 ty3 Nil))) where
+  labels _ =
+    [ reflectSymbol (SProxy :: SProxy name1)
+    , reflectSymbol (SProxy :: SProxy name2)
+    , reflectSymbol (SProxy :: SProxy name3)
+    ]
+instance getLabelsCons4
+  :: ( IsSymbol name1
+     , IsSymbol name2
+     , IsSymbol name3
+     , IsSymbol name4 )
+  => RowLabels
+      (Cons name1 ty1
+        (Cons name2 ty2
+          (Cons name3 ty3
+            (Cons name4 ty4 Nil)))) where
+  labels _ =
+    [ reflectSymbol (SProxy :: SProxy name1)
+    , reflectSymbol (SProxy :: SProxy name2)
+    , reflectSymbol (SProxy :: SProxy name3)
+    , reflectSymbol (SProxy :: SProxy name4)
+    ]
+instance getLabelsCons5
+  :: ( IsSymbol name1
+     , IsSymbol name2
+     , IsSymbol name3
+     , IsSymbol name4
+     , IsSymbol name5 )
+  => RowLabels
+      (Cons name1 ty1
+        (Cons name2 ty2
+          (Cons name3 ty3
+            (Cons name4 ty4
+              (Cons name5 ty5 Nil))))) where
+  labels _ =
+    [ reflectSymbol (SProxy :: SProxy name1)
+    , reflectSymbol (SProxy :: SProxy name2)
+    , reflectSymbol (SProxy :: SProxy name3)
+    , reflectSymbol (SProxy :: SProxy name4)
+    , reflectSymbol (SProxy :: SProxy name5)
+    ]
+instance getLabelsCons6
+  :: ( IsSymbol name1
+     , IsSymbol name2
+     , IsSymbol name3
+     , IsSymbol name4
+     , IsSymbol name5
+     , IsSymbol name6 )
+  => RowLabels
+      (Cons name1 ty1
+        (Cons name2 ty2
+          (Cons name3 ty3
+            (Cons name4 ty4
+              (Cons name5 ty5
+                (Cons name6 ty6 Nil)))))) where
+  labels _ =
+    [ reflectSymbol (SProxy :: SProxy name1)
+    , reflectSymbol (SProxy :: SProxy name2)
+    , reflectSymbol (SProxy :: SProxy name3)
+    , reflectSymbol (SProxy :: SProxy name4)
+    , reflectSymbol (SProxy :: SProxy name5)
+    , reflectSymbol (SProxy :: SProxy name6)
+    ]
+instance getLabelsCons7
+  :: ( IsSymbol name1
+     , IsSymbol name2
+     , IsSymbol name3
+     , IsSymbol name4
+     , IsSymbol name5
+     , IsSymbol name6
+     , IsSymbol name7 )
+  => RowLabels
+      (Cons name1 ty1
+        (Cons name2 ty2
+          (Cons name3 ty3
+            (Cons name4 ty4
+              (Cons name5 ty5
+                (Cons name6 ty6
+                  (Cons name7 ty7 Nil))))))) where
+  labels _ =
+    [ reflectSymbol (SProxy :: SProxy name1)
+    , reflectSymbol (SProxy :: SProxy name2)
+    , reflectSymbol (SProxy :: SProxy name3)
+    , reflectSymbol (SProxy :: SProxy name4)
+    , reflectSymbol (SProxy :: SProxy name5)
+    , reflectSymbol (SProxy :: SProxy name6)
+    , reflectSymbol (SProxy :: SProxy name7)
+    ]
+instance getLabelsCons8
+  :: ( IsSymbol name1
+     , IsSymbol name2
+     , IsSymbol name3
+     , IsSymbol name4
+     , IsSymbol name5
+     , IsSymbol name6
+     , IsSymbol name7
+     , IsSymbol name8 )
+  => RowLabels
+      (Cons name1 ty1
+        (Cons name2 ty2
+          (Cons name3 ty3
+            (Cons name4 ty4
+              (Cons name5 ty5
+                (Cons name6 ty6
+                  (Cons name7 ty7
+                    (Cons name8 ty8 Nil)))))))) where
+  labels _ =
+    [ reflectSymbol (SProxy :: SProxy name1)
+    , reflectSymbol (SProxy :: SProxy name2)
+    , reflectSymbol (SProxy :: SProxy name3)
+    , reflectSymbol (SProxy :: SProxy name4)
+    , reflectSymbol (SProxy :: SProxy name5)
+    , reflectSymbol (SProxy :: SProxy name6)
+    , reflectSymbol (SProxy :: SProxy name7)
+    , reflectSymbol (SProxy :: SProxy name8)
+    ]
+instance getLabelsCons9
+  :: ( IsSymbol name1
+     , IsSymbol name2
+     , IsSymbol name3
+     , IsSymbol name4
+     , IsSymbol name5
+     , IsSymbol name6
+     , IsSymbol name7
+     , IsSymbol name8
+     , IsSymbol name9 )
+  => RowLabels
+      (Cons name1 ty1
+        (Cons name2 ty2
+          (Cons name3 ty3
+            (Cons name4 ty4
+              (Cons name5 ty5
+                (Cons name6 ty6
+                  (Cons name7 ty7
+                    (Cons name8 ty8
+                      (Cons name9 ty9 Nil))))))))) where
+  labels _ =
+    [ reflectSymbol (SProxy :: SProxy name1)
+    , reflectSymbol (SProxy :: SProxy name2)
+    , reflectSymbol (SProxy :: SProxy name3)
+    , reflectSymbol (SProxy :: SProxy name4)
+    , reflectSymbol (SProxy :: SProxy name5)
+    , reflectSymbol (SProxy :: SProxy name6)
+    , reflectSymbol (SProxy :: SProxy name7)
+    , reflectSymbol (SProxy :: SProxy name8)
+    , reflectSymbol (SProxy :: SProxy name9)
+    ]
+instance getLabelsCons10
+  :: ( IsSymbol name1
+     , IsSymbol name2
+     , IsSymbol name3
+     , IsSymbol name4
+     , IsSymbol name5
+     , IsSymbol name6
+     , IsSymbol name7
+     , IsSymbol name8
+     , IsSymbol name9
+     , IsSymbol name10 )
+  => RowLabels
+      (Cons name1 ty1
+        (Cons name2 ty2
+          (Cons name3 ty3
+            (Cons name4 ty4
+              (Cons name5 ty5
+                (Cons name6 ty6
+                  (Cons name7 ty7
+                    (Cons name8 ty8
+                      (Cons name9 ty9
+                        (Cons name10 ty10 Nil)))))))))) where
+  labels _ =
+    [ reflectSymbol (SProxy :: SProxy name1)
+    , reflectSymbol (SProxy :: SProxy name2)
+    , reflectSymbol (SProxy :: SProxy name3)
+    , reflectSymbol (SProxy :: SProxy name4)
+    , reflectSymbol (SProxy :: SProxy name5)
+    , reflectSymbol (SProxy :: SProxy name6)
+    , reflectSymbol (SProxy :: SProxy name7)
+    , reflectSymbol (SProxy :: SProxy name8)
+    , reflectSymbol (SProxy :: SProxy name9)
+    , reflectSymbol (SProxy :: SProxy name10)
+    ]
 instance getLabelsCons
-  :: ( IsSymbol name
-     , RowLabels tail
-     )
-  => RowLabels (Cons name ty tail) where
-  labels _ = cons (reflectSymbol (SProxy :: SProxy name)) (labels (RLProxy :: RLProxy tail))
-    where
-      cons x xs = [x] <> xs
+  :: ( IsSymbol name1
+     , IsSymbol name2
+     , IsSymbol name3
+     , IsSymbol name4
+     , IsSymbol name5
+     , IsSymbol name6
+     , IsSymbol name7
+     , IsSymbol name8
+     , IsSymbol name9
+     , IsSymbol name10
+     , IsSymbol name11
+     , RowLabels rest)
+  => RowLabels
+      (Cons name1 ty1
+        (Cons name2 ty2
+          (Cons name3 ty3
+            (Cons name4 ty4
+              (Cons name5 ty5
+                (Cons name6 ty6
+                  (Cons name7 ty7
+                    (Cons name8 ty8
+                      (Cons name9 ty9
+                        (Cons name10 ty10
+                          (Cons name11 ty11 rest))))))))))) where
+  labels _ =
+    [ reflectSymbol (SProxy :: SProxy name1)
+    , reflectSymbol (SProxy :: SProxy name2)
+    , reflectSymbol (SProxy :: SProxy name3)
+    , reflectSymbol (SProxy :: SProxy name4)
+    , reflectSymbol (SProxy :: SProxy name5)
+    , reflectSymbol (SProxy :: SProxy name6)
+    , reflectSymbol (SProxy :: SProxy name7)
+    , reflectSymbol (SProxy :: SProxy name8)
+    , reflectSymbol (SProxy :: SProxy name9)
+    , reflectSymbol (SProxy :: SProxy name10)
+    , reflectSymbol (SProxy :: SProxy name11)
+    ] <> labels (RLProxy :: RLProxy rest)
 
 labelsR
   :: forall r l
    . RowToList r l
-  => ListToRow l r
   => RowLabels l
   => RProxy r
   -> Array String

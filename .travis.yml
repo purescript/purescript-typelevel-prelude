@@ -11,9 +11,11 @@ install:
   - chmod a+x $HOME/purescript
   - npm install -g bower
   - npm install
-  - bower install
+  - bower install --production
 script:
   - npm run -s build
+  - bower install
+  - npm run -s test
 after_success:
 - >-
   test $TRAVIS_TAG &&
