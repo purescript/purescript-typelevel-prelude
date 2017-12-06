@@ -14,8 +14,8 @@ instance homogeneous
   => Homogeneous row fieldType
 
 class HomogenousRowList (rowList :: RowList) fieldType | rowList -> fieldType
-instance fieldOfCons
+instance homogenousRowListCons
   :: ( HomogenousRowList tail fieldType
      , TypeEquals fieldType fieldType2 )
   => HomogenousRowList (Cons symbol fieldType tail) fieldType2
-instance fieldOfNil :: HomogenousRowList Nil fieldType
+instance homogenousRowListNil :: HomogenousRowList Nil fieldType
