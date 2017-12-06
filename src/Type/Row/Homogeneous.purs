@@ -1,6 +1,6 @@
 module Type.Row.Homogeneous
-  ( class FieldOf
-  , class Homogeneous
+  ( class Homogeneous
+  , class HomogenousRowList
   ) where
 
 import Type.Equality (class TypeEquals)
@@ -10,12 +10,12 @@ import Type.Row (class RowToList, Cons, Nil, kind RowList)
 class Homogeneous (row :: # Type) fieldType | row -> fieldType
 instance homogeneous
   :: ( RowToList row fields
-     , FieldOf fields fieldType )
+     , HomogenousRowList fields fieldType )
   => Homogeneous row fieldType
 
-class FieldOf (rowList :: RowList) fieldType | rowList -> fieldType
+class HomogenousRowList (rowList :: RowList) fieldType | rowList -> fieldType
 instance fieldOfCons
-  :: ( FieldOf tail fieldType
+  :: ( HomogenousRowList tail fieldType
      , TypeEquals fieldType fieldType2 )
-  => FieldOf (Cons symbol fieldType tail) fieldType2
-instance fieldOfNil :: FieldOf Nil fieldType
+  => HomogenousRowList (Cons symbol fieldType tail) fieldType2
+instance fieldOfNil :: HomogenousRowList Nil fieldType
