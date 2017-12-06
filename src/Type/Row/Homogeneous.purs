@@ -3,7 +3,6 @@ module Type.Row.Homogeneous
   , class Homogeneous
   ) where
 
--- | Ensure that every field in a row has the same type.
 import Type.Equality (class TypeEquals)
 import Type.Row (class RowToList, Cons, Nil, kind RowList)
 
