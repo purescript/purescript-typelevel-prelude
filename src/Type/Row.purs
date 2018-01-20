@@ -14,6 +14,7 @@ module Type.Row
   , class RowListAppend
   ) where
 
+import Prim.Row (class Cons, class Union)
 import Type.Equality (class TypeEquals)
 import Type.Data.Symbol as Symbol
 import Type.Data.Boolean as Boolean
@@ -43,9 +44,9 @@ class RowLacks (key :: Symbol)
 -- `key`, we get a "No type class instance found" error for:
 -- `RowLacking Entry key typ row`.
 instance rowLacks
-  :: ( RowCons key Entry () keyEntry
+  :: ( Cons key Entry () keyEntry
      , Union row keyEntry rowKeyEntry
-     , RowCons key typ ignored rowKeyEntry
+     , Cons key typ ignored rowKeyEntry
      , RowLacking Entry key typ row )
   => RowLacks key row
 
@@ -74,9 +75,9 @@ class ListToRow (list :: RowList)
 instance listToRowNil
   :: ListToRow Nil ()
 
-instance listToRowCons
+instance listToCons
   :: ( ListToRow tail tailRow
-     , RowCons label ty tailRow row )
+     , Cons label ty tailRow row )
   => ListToRow (Cons label ty tail) row
 
 -- | Remove all occurences of a given label from a RowList
