@@ -15,7 +15,8 @@ module Type.Data.Ordering
   , equals
   ) where
 
-import Data.Ordering (Ordering(..))
+import Prelude
+
 import Type.Data.Boolean (kind Boolean, True, False, BProxy(..))
 
 foreign import kind Ordering
@@ -25,6 +26,44 @@ foreign import data GT :: Ordering
 
 -- | Value proxy for `Ordering` types
 data OProxy (ordering :: Ordering) = OProxy
+
+derive instance eqOProxy :: Eq (OProxy a)
+
+derive instance ordOProxy :: Ord (OProxy a)
+
+instance booleanAlgebraOProxy :: BooleanAlgebra (OProxy a)
+
+instance boundedOProxy :: Bounded (OProxy a) where
+  bottom = OProxy
+  top = OProxy
+
+instance commutativeRingOProxy :: CommutativeRing (OProxy a)
+
+instance discardOProxy :: Discard (OProxy a) where
+  discard = bind
+
+instance heytingAlgebraOProxy :: HeytingAlgebra (OProxy a) where
+  conj _ _ = OProxy
+  disj _ _ = OProxy
+  implies _ _ = OProxy
+  ff = OProxy
+  not _ = OProxy
+  tt = OProxy
+
+instance ringOProxy :: Ring (OProxy a) where
+  sub _ _ = OProxy
+
+instance semigroupOProxy :: Semigroup (OProxy a) where
+  append _ _ = OProxy
+
+instance semiringOProxy :: Semiring (OProxy a) where
+  add _ _ = OProxy
+  mul _ _ = OProxy
+  one = OProxy
+  zero = OProxy
+
+instance showOProxy :: Show (OProxy a) where
+  show _ = "OProxy"
 
 -- | Class for reflecting a type level `Ordering` at the value level
 class IsOrdering (ordering :: Ordering) where

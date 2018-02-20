@@ -16,6 +16,8 @@ module Type.Data.Boolean
   , if_
   ) where
 
+import Prelude
+
 import Type.Proxy (Proxy(..))
 
 foreign import kind Boolean
@@ -24,6 +26,44 @@ foreign import data False :: Boolean
 
 -- | Value proxy for `Boolean` types
 data BProxy (bool :: Boolean) = BProxy
+
+derive instance eqBProxy :: Eq (BProxy a)
+
+derive instance ordBProxy :: Ord (BProxy a)
+
+instance booleanAlgebraBProxy :: BooleanAlgebra (BProxy a)
+
+instance boundedBProxy :: Bounded (BProxy a) where
+  bottom = BProxy
+  top = BProxy
+
+instance commutativeRingBProxy :: CommutativeRing (BProxy a)
+
+instance discardBProxy :: Discard (BProxy a) where
+  discard = bind
+
+instance heytingAlgebraBProxy :: HeytingAlgebra (BProxy a) where
+  conj _ _ = BProxy
+  disj _ _ = BProxy
+  implies _ _ = BProxy
+  ff = BProxy
+  not _ = BProxy
+  tt = BProxy
+
+instance ringBProxy :: Ring (BProxy a) where
+  sub _ _ = BProxy
+
+instance semigroupBProxy :: Semigroup (BProxy a) where
+  append _ _ = BProxy
+
+instance semiringBProxy :: Semiring (BProxy a) where
+  add _ _ = BProxy
+  mul _ _ = BProxy
+  one = BProxy
+  zero = BProxy
+
+instance showBProxy :: Show (BProxy a) where
+  show _ = "BProxy"
 
 -- | Class for reflecting a type level `Boolean` at the value level
 class IsBoolean (bool :: Boolean) where
