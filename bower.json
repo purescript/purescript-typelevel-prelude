@@ -17,7 +17,7 @@
   ],
   "dependencies": {
     "purescript-proxy": "^2.0.0",
-    "purescript-symbols": "^3.0.0",
+    "purescript-symbols": "purescript/purescript-symbols#compiler/0.12",
     "purescript-type-equality": "^2.0.0"
   }
 }
