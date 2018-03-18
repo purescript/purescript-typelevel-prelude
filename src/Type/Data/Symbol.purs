@@ -27,7 +27,7 @@ compareSymbol _ _ = OProxy
 class AppendSymbol (lhs :: Symbol)
                    (rhs :: Symbol)
                    (out :: Symbol) |
-                   lhs rhs -> out
+                   lhs rhs -> out, lhs out -> rhs, rhs out -> lhs
 
 appendSymbol :: forall l r o. AppendSymbol l r o => SProxy l -> SProxy r -> SProxy o
 appendSymbol _ _ = SProxy
