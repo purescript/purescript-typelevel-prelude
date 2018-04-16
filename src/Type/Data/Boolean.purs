@@ -74,7 +74,7 @@ class If (bool :: Boolean)
          (onTrue :: Type)
          (onFalse :: Type)
          (output :: Type) |
-         bool -> onTrue onFalse output
+         bool onTrue onFalse -> output
 instance ifTrue :: If True onTrue onFalse onTrue
 instance ifFalse :: If False onTrue onFalse onFalse
 
