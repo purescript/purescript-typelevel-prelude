@@ -16,8 +16,8 @@
     "package.json"
   ],
   "dependencies": {
-    "purescript-proxy": "^2.0.0",
+    "purescript-proxy": "purescript/purescript-proxy#compiler/0.12",
     "purescript-symbols": "purescript/purescript-symbols#compiler/0.12",
-    "purescript-type-equality": "^2.0.0"
+    "purescript-type-equality": "purescript/purescript-type-equality#compiler/0.12"
   }
 }
