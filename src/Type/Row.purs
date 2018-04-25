@@ -12,7 +12,7 @@ module Type.Row
   , type (+)
   ) where
 
-import Prim.Row (class Lacks, class Nub, class Cons)
+import Prim.Row (class Lacks, class Nub, class Cons, class Union)
 import Prim.RowList (kind RowList, Cons, Nil, class RowToList)
 import Type.Equality (class TypeEquals)
 import Type.Data.Symbol as Symbol
