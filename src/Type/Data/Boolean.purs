@@ -41,7 +41,7 @@ reifyBoolean false f = f (BProxy :: BProxy False)
 class And (lhs :: Boolean)
           (rhs :: Boolean)
           (output :: Boolean) |
-          lhs -> rhs output
+          lhs rhs -> output
 instance andTrue :: And True rhs rhs
 instance andFalse :: And False rhs False
 
@@ -52,7 +52,7 @@ and _ _ = BProxy
 class Or (lhs :: Boolean)
          (rhs :: Boolean)
          (output :: Boolean) |
-         lhs -> rhs output
+         lhs rhs -> output
 instance orTrue :: Or True rhs True
 instance orFalse :: Or False rhs rhs
 
