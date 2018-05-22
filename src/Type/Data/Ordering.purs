@@ -1,27 +1,20 @@
 module Type.Data.Ordering
-  ( kind Ordering
-  , LT
-  , EQ
-  , GT
+  ( module Prim.Ordering
   , OProxy(..)
   , class IsOrdering
   , reflectOrdering
   , reifyOrdering
-  , class AppendOrdering
-  , appendOrdering
-  , class InvertOrdering
-  , invertOrdering
+  , class Append
+  , append
+  , class Invert
+  , invert
   , class Equals
   , equals
   ) where
 
+import Prim.Ordering (kind Ordering, LT, EQ, GT)
 import Data.Ordering (Ordering(..))
 import Type.Data.Boolean (kind Boolean, True, False, BProxy(..))
-
-foreign import kind Ordering
-foreign import data LT :: Ordering
-foreign import data EQ :: Ordering
-foreign import data GT :: Ordering
 
 -- | Value proxy for `Ordering` types
 data OProxy (ordering :: Ordering) = OProxy
@@ -42,27 +35,27 @@ reifyOrdering GT f = f (OProxy :: OProxy GT)
 
 -- | Append two `Ordering` types together
 -- | Reflective of the semigroup for value level `Ordering`
-class AppendOrdering (lhs :: Ordering)
-                     (rhs :: Ordering)
-                     (output :: Ordering) |
-                     lhs -> rhs output
-instance appendOrderingLT :: AppendOrdering LT rhs LT
-instance appendOrderingEQ :: AppendOrdering EQ rhs rhs
-instance appendOrderingGT :: AppendOrdering GT rhs GT
+class Append (lhs :: Ordering)
+             (rhs :: Ordering)
+             (output :: Ordering) |
+             lhs -> rhs output
+instance appendOrderingLT :: Append LT rhs LT
+instance appendOrderingEQ :: Append EQ rhs rhs
+instance appendOrderingGT :: Append GT rhs GT
 
-appendOrdering :: forall l r o. AppendOrdering l r o => OProxy l -> OProxy r -> OProxy o
-appendOrdering _ _ = OProxy
+append :: forall l r o. Append l r o => OProxy l -> OProxy r -> OProxy o
+append _ _ = OProxy
 
 -- | Invert an `Ordering`
-class InvertOrdering (ordering :: Ordering)
-                     (result :: Ordering) |
-                     ordering -> result
-instance invertOrderingLT :: InvertOrdering LT GT
-instance invertOrderingEQ :: InvertOrdering EQ EQ
-instance invertOrderingGT :: InvertOrdering GT LT
+class Invert (ordering :: Ordering)
+             (result :: Ordering) |
+             ordering -> result
+instance invertOrderingLT :: Invert LT GT
+instance invertOrderingEQ :: Invert EQ EQ
+instance invertOrderingGT :: Invert GT LT
 
-invertOrdering :: forall i o. InvertOrdering i o => OProxy i -> OProxy o
-invertOrdering _ = OProxy
+invert :: forall i o. Invert i o => OProxy i -> OProxy o
+invert _ = OProxy
 
 class Equals (lhs :: Ordering)
              (rhs :: Ordering)

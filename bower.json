@@ -2,7 +2,7 @@
   "name": "purescript-typelevel-prelude",
   "homepage": "https://github.com/purescript/purescript-typelevel-prelude",
   "description": "Types and kinds for basic type-level programming",
-  "license": "MIT",
+  "license": "BSD-3-Clause",
   "repository": {
     "type": "git",
     "url": "git://github.com/purescript/purescript-typelevel-prelude.git"
@@ -16,8 +16,8 @@
     "package.json"
   ],
   "dependencies": {
-    "purescript-proxy": "^2.0.0",
-    "purescript-symbols": "^3.0.0",
-    "purescript-type-equality": "^2.0.0"
+    "purescript-proxy": "^3.0.0",
+    "purescript-prelude": "^4.0.0",
+    "purescript-type-equality": "^3.0.0"
   }
 }

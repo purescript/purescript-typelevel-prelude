@@ -1,36 +1,27 @@
 module Type.Data.Symbol
-  ( module Data.Symbol
-  , class CompareSymbol
-  , compareSymbol
-  , class AppendSymbol
-  , appendSymbol
+  ( module Prim.Symbol
+  , module Data.Symbol
+  , append
+  , compare
+  , uncons
   , class Equals
   , equals
   ) where
 
+import Prim.Symbol (class Append, class Compare, class Cons)
 import Data.Symbol (SProxy(..), class IsSymbol, reflectSymbol, reifySymbol)
 import Type.Data.Ordering (OProxy(..), kind Ordering, EQ)
 import Type.Data.Ordering (class Equals) as Ordering
 import Type.Data.Boolean (kind Boolean, BProxy(..))
 
--- | Compare two `Symbol` types
-class CompareSymbol (lhs :: Symbol)
-                    (rhs :: Symbol)
-                    (out :: Ordering) |
-                    lhs rhs -> out
+compare :: forall l r o. Compare l r o => SProxy l -> SProxy r -> OProxy o
+compare _ _ = OProxy
 
-compareSymbol :: forall l r o. CompareSymbol l r o => SProxy l -> SProxy r -> OProxy o
-compareSymbol _ _ = OProxy
+append :: forall l r o. Append l r o => SProxy l -> SProxy r -> SProxy o
+append _ _ = SProxy
 
-
--- | Append two `Symbol` types together
-class AppendSymbol (lhs :: Symbol)
-                   (rhs :: Symbol)
-                   (out :: Symbol) |
-                   lhs rhs -> out
-
-appendSymbol :: forall l r o. AppendSymbol l r o => SProxy l -> SProxy r -> SProxy o
-appendSymbol _ _ = SProxy
+uncons :: forall h t s. Cons h t s => SProxy s -> {head :: SProxy h, tail :: SProxy t}
+uncons _ = {head : SProxy, tail : SProxy}
 
 class Equals (lhs :: Symbol)
              (rhs :: Symbol)
@@ -38,7 +29,7 @@ class Equals (lhs :: Symbol)
              lhs rhs -> out
 
 instance equalsSymbol
-  :: (CompareSymbol lhs rhs ord,
+  :: (Compare lhs rhs ord,
       Ordering.Equals EQ ord out)
   => Equals lhs rhs out
 
