@@ -1,8 +1,6 @@
 module Type.Data.Boolean
-  ( kind Boolean
-  , True
-  , False
-  , BProxy(..)
+  ( BProxy(..)
+  , module Prim.Boolean
   , class IsBoolean
   , reflectBoolean
   , reifyBoolean
@@ -16,11 +14,8 @@ module Type.Data.Boolean
   , if_
   ) where
 
+import Prim.Boolean (kind Boolean, True, False)
 import Type.Proxy (Proxy(..))
-
-foreign import kind Boolean
-foreign import data True :: Boolean
-foreign import data False :: Boolean
 
 -- | Value proxy for `Boolean` types
 data BProxy (bool :: Boolean) = BProxy
