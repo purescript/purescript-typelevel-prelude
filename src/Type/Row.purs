@@ -1,8 +1,8 @@
 module Type.Row
-  ( RProxy(..)
-  , module Prim.Row
+  ( module Prim.Row
+  , module RProxy
   , module Prim.RowList
-  , RLProxy(..)
+  , module RLProxy
   , class ListToRow
   , class RowListRemove
   , class RowListSet
@@ -17,10 +17,10 @@ import Prim.RowList (kind RowList, Cons, Nil, class RowToList)
 import Type.Equality (class TypeEquals)
 import Type.Data.Symbol as Symbol
 import Type.Data.Boolean as Boolean
+import Type.Data.Row (RProxy(..)) as RProxy
+import Type.Data.RowList (RLProxy)
+import Type.Data.RowList (RLProxy(..)) as RLProxy
 
-data RProxy (row :: # Type) = RProxy
-
-data RLProxy (rowList :: RowList) = RLProxy
 
 -- | Convert a RowList to a row of types.
 -- | The inverse of this operation is `RowToList`.
