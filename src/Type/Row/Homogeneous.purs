@@ -4,7 +4,7 @@ module Type.Row.Homogeneous
   ) where
 
 import Type.Equality (class TypeEquals)
-import Type.Row (class RowToList, Cons, Nil, kind RowList)
+import Type.RowList (class RowToList, Cons, Nil, kind RowList)
 
 -- | Ensure that every field in a row has the same type.
 class Homogeneous (row :: # Type) fieldType | row -> fieldType
