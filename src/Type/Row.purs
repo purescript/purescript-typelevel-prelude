@@ -12,8 +12,7 @@ module Type.Row
   , type (+)
   ) where
 
-import Prim.Row (class Lacks, class Nub, class Union)
-import Prim.Row as Row
+import Prim.Row (class Lacks, class Nub, class Cons, class Union)
 import Prim.RowList (kind RowList, Cons, Nil, class RowToList)
 import Type.Equality (class TypeEquals)
 import Type.Data.Symbol as Symbol
@@ -34,7 +33,7 @@ instance listToRowNil
 
 instance listToCons
   :: ( ListToRow tail tailRow
-     , Row.Cons label ty tailRow row )
+     , Cons label ty tailRow row )
   => ListToRow (Cons label ty tail) row
 
 -- | Remove all occurences of a given label from a RowList
