@@ -10,7 +10,7 @@ module Type.Data.Symbol
 
 import Prim.Symbol (class Append, class Compare, class Cons)
 import Data.Symbol (SProxy(..), class IsSymbol, reflectSymbol, reifySymbol)
-import Type.Data.Ordering (OProxy(..), kind Ordering, EQ)
+import Type.Data.Ordering (OProxy(..), EQ)
 import Type.Data.Ordering (class Equals) as Ordering
 import Type.Data.Boolean (kind Boolean, BProxy(..))
 
