@@ -84,9 +84,7 @@ class RowListAppend (lhs :: RowList)
                     (out :: RowList)
                     | lhs rhs -> out
 
-instance rowListAppendNil
-  :: TypeEquals (RLProxy rhs) (RLProxy out)
-  => RowListAppend Nil rhs out
+instance rowListAppendNil :: RowListAppend Nil rhs rhs
 
 instance rowListAppendCons
   :: ( RowListAppend tail rhs out'
