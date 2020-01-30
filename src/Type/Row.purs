@@ -8,6 +8,28 @@ module Type.Row
 import Prim.Row (class Lacks, class Nub, class Cons, class Union)
 import Type.Data.Row (RProxy(..)) as RProxy
 
+-- | Polymorphic Type application
+-- |
+-- | For example...
+-- | ```
+-- | APPLY Maybe Int == Maybe $ Int == Maybe Int
+-- | ```
+type APPLY ∷ ∀ d c . (d → c) → d → c
+type APPLY f a = f a
+
+infixr 0 type APPLY as $
+
+-- | Reversed polymorphic Type application
+-- |
+-- | For example...
+-- | ```
+-- | FLIP Int Maybe == Maybe Int
+-- | ```
+-- | Note: an infix for FLIP (e.g. `Int # Maybe`) is not allowed since
+-- | `# Type` is an alias for `Row Type`
+type FLIP ∷ ∀ d c . d → (d → c) → c
+type FLIP a f = f a
+
 -- | Type application for rows.
 type RowApply :: forall k. (Row k -> Row k) -> Row k -> Row k
 type RowApply f a = f a
