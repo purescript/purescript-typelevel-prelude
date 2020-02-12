@@ -26,7 +26,7 @@ infixr 0 type APPLY as $
 -- | FLIP Int Maybe == Maybe Int
 -- | ```
 -- | Note: an infix for FLIP (e.g. `Int # Maybe`) is not allowed since
--- | `# Type` is an alias for `Row Type`
+-- | `Row Type` is an alias for `Row Type`
 type FLIP ∷ ∀ d c . d → (d → c) → c
 type FLIP a f = f a
 

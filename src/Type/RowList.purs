@@ -9,7 +9,7 @@ module Type.RowList
   ) where
 
 import Prim.Row as Row
-import Prim.RowList (kind RowList, Cons, Nil, class RowToList)
+import Prim.RowList (RowList, Cons, Nil, class RowToList)
 import Type.Equality (class TypeEquals)
 import Type.Data.Symbol as Symbol
 import Type.Data.Boolean as Boolean

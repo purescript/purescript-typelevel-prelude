@@ -9,7 +9,7 @@ module Type.Prelude
   ) where
 
 import Type.Data.Boolean (True, False, BProxy(..), class IsBoolean, reflectBoolean, reifyBoolean)
-import Type.Data.Ordering (kind Ordering, LT, EQ, GT, OProxy(..), class IsOrdering, reflectOrdering, reifyOrdering)
+import Type.Data.Ordering (Ordering, LT, EQ, GT, OProxy(..), class IsOrdering, reflectOrdering, reifyOrdering)
 import Type.Proxy (Proxy(..))
 import Type.Data.Symbol (SProxy(..), class IsSymbol, reflectSymbol, reifySymbol, class Compare, compare, class Append, append)
 import Type.Equality (class TypeEquals, from, to)
