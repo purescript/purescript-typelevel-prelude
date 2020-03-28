@@ -23,12 +23,12 @@ infixr 0 type APPLY as $
 -- |
 -- | For example...
 -- | ```
--- | FLIP Int Maybe == Maybe Int
+-- | FLIP Int Maybe == Int # Maybe == Maybe Int
 -- | ```
--- | Note: an infix for FLIP (e.g. `Int # Maybe`) is not allowed since
--- | `# Type` is an alias for `Row Type`
 type FLIP ∷ ∀ d c . d → (d → c) → c
 type FLIP a f = f a
+
+infixr 0 type FLIP as #
 
 -- | Type application for rows.
 type RowApply :: forall k. (Row k -> Row k) -> Row k -> Row k
