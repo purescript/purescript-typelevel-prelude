@@ -18,10 +18,12 @@ import Data.Ordering (Ordering(..))
 import Type.Data.Boolean (True, False, BProxy(..))
 
 -- | Value proxy for `Ordering` types
-data OProxy (ordering :: PO.Ordering) = OProxy
+data OProxy :: PO.Ordering -> Type
+data OProxy ordering = OProxy
 
 -- | Class for reflecting a type level `Ordering` at the value level
-class IsOrdering (ordering :: PO.Ordering) where
+class IsOrdreing :: PO.Ordering -> Constraint
+class IsOrdering ordering where
   reflectOrdering :: forall proxy. proxy ordering -> Ordering
 
 instance isOrderingLT :: IsOrdering LT where reflectOrdering _ = LT
