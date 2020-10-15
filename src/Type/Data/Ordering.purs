@@ -23,7 +23,7 @@ data OProxy :: PO.Ordering -> Type
 data OProxy ordering = OProxy
 
 -- | Class for reflecting a type level `Ordering` at the value level
-class IsOrdreing :: PO.Ordering -> Constraint
+class IsOrdering :: PO.Ordering -> Constraint
 class IsOrdering ordering where
   reflectOrdering :: forall proxy. proxy ordering -> Ordering
 
