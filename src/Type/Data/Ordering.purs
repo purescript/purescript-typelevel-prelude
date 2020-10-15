@@ -16,6 +16,7 @@ import Prim.Ordering as PO -- refer to kind Ordering via `PO.Ordering`
 import Prim.Ordering (LT, EQ, GT)
 import Data.Ordering (Ordering(..))
 import Type.Data.Boolean (True, False, BProxy(..))
+import Type.Proxy (Proxy(..))
 
 -- | Value proxy for `Ordering` types
 data OProxy :: PO.Ordering -> Type
@@ -31,10 +32,10 @@ instance isOrderingEQ :: IsOrdering EQ where reflectOrdering _ = EQ
 instance isOrderingGT :: IsOrdering GT where reflectOrdering _ = GT
 
 -- | Use a value level `Ordering` as a type-level `Ordering`
-reifyOrdering :: forall r. Ordering -> (forall o. IsOrdering o => OProxy o -> r) -> r
-reifyOrdering LT f = f (OProxy :: OProxy LT)
-reifyOrdering EQ f = f (OProxy :: OProxy EQ)
-reifyOrdering GT f = f (OProxy :: OProxy GT)
+reifyOrdering :: forall r. Ordering -> (forall o. IsOrdering o => Proxy o -> r) -> r
+reifyOrdering LT f = f (Proxy :: Proxy LT)
+reifyOrdering EQ f = f (Proxy :: Proxy EQ)
+reifyOrdering GT f = f (Proxy :: Proxy GT)
 
 -- | Append two `Ordering` types together
 -- | Reflective of the semigroup for value level `Ordering`
