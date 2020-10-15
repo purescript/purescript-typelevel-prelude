@@ -18,6 +18,7 @@ import Type.Data.Boolean (True, False, BProxy(..))
 import Type.Proxy (Proxy(..))
 
 -- | Value proxy for `Ordering` types
+-- | **Deprecated:** Use `Type.Proxy` instead
 data OProxy :: PO.Ordering -> Type
 data OProxy ordering = OProxy
 

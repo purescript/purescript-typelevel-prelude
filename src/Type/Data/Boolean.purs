@@ -18,6 +18,7 @@ import Prim.Boolean (True, False)
 import Type.Proxy (Proxy(..))
 
 -- | Value proxy for `Boolean` types
+-- | **Deprecated:** Use `Type.Proxy` instead
 data BProxy :: Boolean -> Type
 data BProxy bool = BProxy
 
