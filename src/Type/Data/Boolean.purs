@@ -22,7 +22,7 @@ data BProxy :: Boolean -> Type
 data BProxy bool = BProxy
 
 -- | Class for reflecting a type level `Boolean` at the value level
-class IsBoolean :: Boolean -> Type
+class IsBoolean :: Boolean -> Constraint
 class IsBoolean bool where
   reflectBoolean :: forall proxy. proxy bool -> Boolean
 
