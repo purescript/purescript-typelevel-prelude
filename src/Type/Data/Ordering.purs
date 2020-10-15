@@ -32,7 +32,7 @@ instance isOrderingEQ :: IsOrdering EQ where reflectOrdering _ = EQ
 instance isOrderingGT :: IsOrdering GT where reflectOrdering _ = GT
 
 -- | Use a value level `Ordering` as a type-level `Ordering`
-reifyOrdering :: forall r. Ordering -> (forall o. IsOrdering o => Proxy o -> r) -> r
+reifyOrdering :: forall r. Ordering -> (forall proxy o. IsOrdering o => proxy o -> r) -> r
 reifyOrdering LT f = f (Proxy :: Proxy LT)
 reifyOrdering EQ f = f (Proxy :: Proxy EQ)
 reifyOrdering GT f = f (Proxy :: Proxy GT)
