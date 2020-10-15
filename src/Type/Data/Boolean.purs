@@ -18,19 +18,21 @@ import Prim.Boolean (True, False)
 import Type.Proxy (Proxy(..))
 
 -- | Value proxy for `Boolean` types
-data BProxy (bool :: Boolean) = BProxy
+data BProxy :: Boolean -> Type
+data BProxy bool = BProxy
 
 -- | Class for reflecting a type level `Boolean` at the value level
-class IsBoolean (bool :: Boolean) where
+class IsBoolean :: Boolean -> Type
+class IsBoolean bool where
   reflectBoolean :: forall proxy. proxy bool -> Boolean
 
 instance isBooleanTrue :: IsBoolean True where reflectBoolean _ = true
 instance isBooleanFalse :: IsBoolean False where reflectBoolean _ = false
 
 -- | Use a value level `Boolean` as a type-level `Boolean`
-reifyBoolean :: forall r. Boolean -> (forall o. IsBoolean o => BProxy o -> r) -> r
-reifyBoolean true f = f (BProxy :: BProxy True)
-reifyBoolean false f = f (BProxy :: BProxy False)
+reifyBoolean :: forall r. Boolean -> (forall proxy o. IsBoolean o => proxy o -> r) -> r
+reifyBoolean true f = f (Proxy :: Proxy True)
+reifyBoolean false f = f (Proxy :: Proxy False)
 
 -- | And two `Boolean` types together
 class And :: Boolean -> Boolean -> Boolean -> Constraint
