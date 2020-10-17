@@ -14,7 +14,7 @@ import Type.Data.Row (RProxy(..)) as RProxy
 -- | ```
 -- | APPLY Maybe Int == Maybe $ Int == Maybe Int
 -- | ```
-type APPLY ∷ ∀ d c . (d → c) → d → c
+type APPLY :: forall a b. (a -> b) -> a -> b
 type APPLY f a = f a
 
 infixr 0 type APPLY as $
@@ -32,7 +32,7 @@ infixr 0 type APPLY as $
 -- | breakage, `# Type` was made an alias to `Row Type`. When the `# Type`
 -- | syntax is fully dropped in a later language release, we can then
 -- | support the infix version: `Int # Maybe`.
-type FLIP ∷ ∀ d c . d → (d → c) → c
+type FLIP :: forall a b. a -> (a -> b) -> b
 type FLIP a f = f a
 
 -- | Type application for rows.
