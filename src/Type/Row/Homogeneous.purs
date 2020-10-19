@@ -4,16 +4,18 @@ module Type.Row.Homogeneous
   ) where
 
 import Type.Equality (class TypeEquals)
-import Type.RowList (class RowToList, Cons, Nil, kind RowList)
+import Type.RowList (class RowToList, Cons, Nil, RowList)
 
 -- | Ensure that every field in a row has the same type.
-class Homogeneous (row :: # Type) fieldType | row -> fieldType
+class Homogeneous :: forall k. Row k -> k -> Constraint
+class Homogeneous row fieldType | row -> fieldType
 instance homogeneous
   :: ( RowToList row fields
      , HomogeneousRowList fields fieldType )
   => Homogeneous row fieldType
 
-class HomogeneousRowList (rowList :: RowList) fieldType | rowList -> fieldType
+class HomogeneousRowList :: forall k. RowList k -> k -> Constraint
+class HomogeneousRowList rowList fieldType | rowList -> fieldType
 instance homogeneousRowListCons
   :: ( HomogeneousRowList tail fieldType
      , TypeEquals fieldType fieldType2 )

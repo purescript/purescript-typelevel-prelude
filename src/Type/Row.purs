@@ -9,7 +9,8 @@ import Prim.Row (class Lacks, class Nub, class Cons, class Union)
 import Type.Data.Row (RProxy(..)) as RProxy
 
 -- | Type application for rows.
-type RowApply (f :: # Type -> # Type) (a :: # Type) = f a
+type RowApply :: forall k. (Row k -> Row k) -> Row k -> Row k
+type RowApply f a = f a
 
 -- | Applies a type alias of open rows to a set of rows. The primary use case
 -- | this operator is as convenient sugar for combining open rows without
