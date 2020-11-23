@@ -40,9 +40,9 @@ instance rowListRemoveCons
   :: ( RowListRemove label tail tailOutput
      , Symbol.Equals label key eq
      , Boolean.If eq
-         (RLProxy tailOutput)
-         (RLProxy (Cons key head tailOutput))
-         (RLProxy output)
+         tailOutput
+         (Cons key head tailOutput)
+         output
      )
   => RowListRemove label (Cons key head tail) output
 
