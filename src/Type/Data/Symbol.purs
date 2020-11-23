@@ -10,18 +10,18 @@ module Type.Data.Symbol
 
 import Prim.Symbol (class Append, class Compare, class Cons)
 import Data.Symbol (SProxy(..), class IsSymbol, reflectSymbol, reifySymbol)
-import Type.Data.Ordering (OProxy(..), EQ)
+import Type.Data.Ordering (EQ)
 import Type.Data.Ordering (class Equals) as Ordering
-import Type.Data.Boolean (BProxy(..))
+import Type.Proxy (Proxy(..))
 
-compare :: forall l r o. Compare l r o => SProxy l -> SProxy r -> OProxy o
-compare _ _ = OProxy
+compare :: forall proxy l r o. Compare l r o => proxy l -> proxy r -> Proxy o
+compare _ _ = Proxy
 
-append :: forall l r o. Append l r o => SProxy l -> SProxy r -> SProxy o
-append _ _ = SProxy
+append :: forall proxy l r o. Append l r o => proxy l -> proxy r -> Proxy o
+append _ _ = Proxy
 
-uncons :: forall h t s. Cons h t s => SProxy s -> {head :: SProxy h, tail :: SProxy t}
-uncons _ = {head : SProxy, tail : SProxy}
+uncons :: forall proxy h t s. Cons h t s => proxy s -> {head :: Proxy h, tail :: Proxy t}
+uncons _ = {head : Proxy, tail : Proxy}
 
 class Equals :: Symbol -> Symbol -> Boolean -> Constraint
 class Equals lhs rhs out | lhs rhs -> out
@@ -31,5 +31,5 @@ instance equalsSymbol
       Ordering.Equals EQ ord out)
   => Equals lhs rhs out
 
-equals :: forall l r o. Equals l r o => SProxy l -> SProxy r -> BProxy o
-equals _ _ = BProxy
+equals :: forall proxy l r o. Equals l r o => proxy l -> proxy r -> Proxy o
+equals _ _ = Proxy
