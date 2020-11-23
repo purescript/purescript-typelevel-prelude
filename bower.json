@@ -17,6 +17,6 @@
   ],
   "dependencies": {
     "purescript-prelude": "master",
-    "purescript-type-equality": "master"
+    "purescript-type-equality": "leibniz"
   }
 }
