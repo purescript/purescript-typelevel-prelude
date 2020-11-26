@@ -4,6 +4,8 @@ module Type.Data.Boolean
   , class IsBoolean
   , reflectBoolean
   , reifyBoolean
+  , class Equals
+  , equals
   , class And
   , and
   , class Or
@@ -34,6 +36,17 @@ instance isBooleanFalse :: IsBoolean False where reflectBoolean _ = false
 reifyBoolean :: forall r. Boolean -> (forall proxy o. IsBoolean o => proxy o -> r) -> r
 reifyBoolean true f = f (Proxy :: Proxy True)
 reifyBoolean false f = f (Proxy :: Proxy False)
+
+class Equals :: Boolean -> Boolean -> Boolean -> Constraint
+class Equals lhs rhs out | lhs rhs -> out, lhs out -> rhs, rhs out -> lhs
+
+instance equalsTrueTrueTrue :: Equals True True True
+else instance equalsTrueFalseFalse :: Equals True False False
+else instance equalsFalseTrueFalse :: Equals False True False
+else instance equalsFalseFalseTrue :: Equals False False True
+
+equals :: forall proxy l r o. Equals l r o => proxy l -> proxy r -> Proxy o
+equals _ _ = Proxy
 
 -- | And two `Boolean` types together
 class And :: Boolean -> Boolean -> Boolean -> Constraint
