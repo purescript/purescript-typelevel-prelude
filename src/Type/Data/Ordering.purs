@@ -14,7 +14,7 @@ module Type.Data.Ordering
 
 import Prim.Ordering (LT, EQ, GT, Ordering) as PO
 import Data.Ordering (Ordering(..))
-import Type.Data.Boolean (True, False, BProxy(..))
+import Type.Data.Boolean (True, False)
 import Type.Proxy (Proxy(..))
 
 -- | Value proxy for `Ordering` types
@@ -45,8 +45,8 @@ instance appendOrderingLT :: Append PO.LT rhs PO.LT
 instance appendOrderingEQ :: Append PO.EQ rhs rhs
 instance appendOrderingGT :: Append PO.GT rhs PO.GT
 
-append :: forall l r o. Append l r o => OProxy l -> OProxy r -> OProxy o
-append _ _ = OProxy
+append :: forall proxy l r o. Append l r o => proxy l -> proxy r -> Proxy o
+append _ _ = Proxy
 
 -- | Invert an `Ordering`
 class Invert :: PO.Ordering -> PO.Ordering -> Constraint
@@ -55,8 +55,8 @@ instance invertOrderingLT :: Invert PO.LT PO.GT
 instance invertOrderingEQ :: Invert PO.EQ PO.EQ
 instance invertOrderingGT :: Invert PO.GT PO.LT
 
-invert :: forall i o. Invert i o => OProxy i -> OProxy o
-invert _ = OProxy
+invert :: forall proxy i o. Invert i o => proxy i -> Proxy o
+invert _ = Proxy
 
 class Equals :: PO.Ordering -> PO.Ordering -> Boolean -> Constraint
 class Equals lhs rhs out | lhs rhs -> out
@@ -71,5 +71,5 @@ instance equalsLTGT :: Equals PO.LT PO.GT False
 instance equalsGTLT :: Equals PO.GT PO.LT False
 instance equalsGTEQ :: Equals PO.GT PO.EQ False
 
-equals :: forall l r o. Equals l r o => OProxy l -> OProxy r -> BProxy o
-equals _ _ = BProxy
+equals :: forall proxy l r o. Equals l r o => proxy l -> proxy r -> Proxy o
+equals _ _ = Proxy

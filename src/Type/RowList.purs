@@ -13,7 +13,6 @@ import Prim.RowList (RowList, Cons, Nil, class RowToList)
 import Type.Equality (class TypeEquals)
 import Type.Data.Symbol as Symbol
 import Type.Data.Boolean as Boolean
-import Type.Data.RowList (RLProxy)
 import Type.Data.RowList (RLProxy(..)) as RLProxy
 
 -- | Convert a RowList to a row of types.
@@ -40,9 +39,9 @@ instance rowListRemoveCons
   :: ( RowListRemove label tail tailOutput
      , Symbol.Equals label key eq
      , Boolean.If eq
-         (RLProxy tailOutput)
-         (RLProxy (Cons key head tailOutput))
-         (RLProxy output)
+         tailOutput
+         (Cons key head tailOutput)
+         output
      )
   => RowListRemove label (Cons key head tail) output
 
@@ -51,7 +50,7 @@ class RowListSet :: forall k. Symbol -> k -> RowList k -> RowList k -> Constrain
 class RowListSet label typ input output | label typ input -> output
 
 instance rowListSetImpl
-  :: ( TypeEquals (Symbol.SProxy label) (Symbol.SProxy label')
+  :: ( TypeEquals label label'
      , TypeEquals typ typ'
      , RowListRemove label input lacking )
   => RowListSet label typ input (Cons label' typ' lacking)
@@ -64,9 +63,9 @@ instance rowListNubNil
   :: RowListNub Nil Nil
 
 instance rowListNubCons
-  :: ( TypeEquals (Symbol.SProxy label) (Symbol.SProxy label')
+  :: ( TypeEquals label label'
      , TypeEquals head head'
-     , TypeEquals (RLProxy nubbed) (RLProxy nubbed')
+     , TypeEquals nubbed nubbed'
      , RowListRemove label tail removed
      , RowListNub removed nubbed )
   => RowListNub (Cons label head tail) (Cons label' head' nubbed')
@@ -76,10 +75,10 @@ class RowListAppend :: forall k. RowList k -> RowList k -> RowList k -> Constrai
 class RowListAppend lhs rhs out | lhs rhs -> out
 
 instance rowListAppendNil
-  :: TypeEquals (RLProxy rhs) (RLProxy out)
+  :: TypeEquals rhs out
   => RowListAppend Nil rhs out
 
 instance rowListAppendCons
   :: ( RowListAppend tail rhs out'
-     , TypeEquals (RLProxy (Cons label head out')) (RLProxy out) )
+     , TypeEquals (Cons label head out') out )
   => RowListAppend (Cons label head tail) rhs out
