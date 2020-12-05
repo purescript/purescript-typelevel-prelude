@@ -1,14 +1,14 @@
 # purescript-typelevel-prelude
 
 [![Latest release](http://img.shields.io/github/release/purescript/purescript-typelevel-prelude.svg)](https://github.com/purescript/purescript-typelevel-prelude/releases)
-[![Build status](https://travis-ci.org/purescript/purescript-typelevel-prelude.svg?branch=master)](https://travis-ci.org/purescript/purescript-typelevel-prelude)
+[![Build status](https://github.com/purescript/purescript-typelevel-prelude/workflows/CI/badge.svg?branch=master)](https://github.com/purescript/purescript-typelevel-prelude/actions?query=workflow%3ACI+branch%3Amaster)
 
 Types and kinds for basic type-level programming.
 
 ## Installation
 
 ```
-bower install purescript-typelevel-prelude
+spago install typelevel-prelude
 ```
 
 ## Documentation
