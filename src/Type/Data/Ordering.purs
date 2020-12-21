@@ -21,18 +21,16 @@ module Type.Data.Ordering
   , isLte
   , class IsGte
   , isGte
-  , equals
   ) where
 
 import Prim.Ordering (LT, EQ, GT, Ordering) as PO
-import Data.Ordering (Ordering(..))
 import Type.Data.Boolean (True, False)
 import Type.Proxy (Proxy(..))
 import Data.Ordering (Ordering(..))
 import Data.Symbol (SProxy)
-import Prim.Ordering (Ordering, LT, EQ, GT)
 import Prim.Symbol (class Compare) as Symbol
-import Type.Data.Boolean (class Or, BProxy(..), False, True, Boolean)
+import Prim.Boolean(True, False)
+import Type.Data.Boolean (class Or, BProxy(..))
 
 -- | Value proxy for `Ordering` types
 -- | **Deprecated:** Use `Type.Proxy` instead
@@ -89,35 +87,41 @@ instance equalsGTLT :: Equals PO.GT PO.LT False
 instance equalsGTEQ :: Equals PO.GT PO.EQ False
 
 -- | Compares type a b
+class Compare :: forall k. k -> k -> Ordering -> Constraint
 class Compare a b (o :: Ordering) | a b -> o
 
 compare :: forall a b o. Compare a b o => a -> b -> OProxy o
 compare _ _ = OProxy
 
+class IsLt :: forall k. k -> k -> Boolean -> Constraint
 class IsLt a b (isLt :: Boolean) | a b -> isLt
-instance isLtTrue ∷ (Compare a b o, Equals o LT isLt) => IsLt a b isLt
+instance isLtTrue ∷ (Compare a b o, Equals o PO.LT isLt) => IsLt a b isLt
 
 isLt :: forall a b isLt. IsLt a b isLt => a -> b -> BProxy isLt
 isLt _ _ = BProxy
 
+class IsGt :: forall k. k -> k -> Boolean -> Constraint
 class IsGt a b (isGt :: Boolean) | a b -> isGt
-instance isGtCompare :: (Compare a b o, Equals o GT isGt) => IsGt a b isGt
+instance isGtCompare :: (Compare a b o, Equals o PO.GT isGt) => IsGt a b isGt
 
 isGt :: forall a b isGt. IsGt a b isGt => a -> b -> BProxy isGt
 isGt _ _ = BProxy
 
+class IsEq :: forall k. k -> k -> Boolean -> Constraint
 class IsEq a b (isEq :: Boolean) | a b -> isEq
-instance isEqCompare :: (Compare a b o, Equals o EQ isEq) => IsEq a b isEq
+instance isEqCompare :: (Compare a b o, Equals o PO.EQ isEq) => IsEq a b isEq
 
 isEq :: forall a b isEq. IsEq a b isEq => a -> b -> BProxy isEq
 isEq _ _ = BProxy
 
+class IsLte :: forall k. k -> k -> Boolean -> Constraint
 class IsLte a b (isLte :: Boolean) | a b -> isLte
 instance isLteFromIs ∷ (IsEq a b isEq, IsLt a b isLt, Or isEq isLt isLte) => IsLte a b isLte
 
 isLte :: forall a b isLte. IsLte a b isLte => a -> b -> BProxy isLte
 isLte _ _ = BProxy
 
+class IsGte :: forall k. k -> k -> Boolean -> Constraint
 class IsGte a b (isGte :: Boolean) | a b -> isGte
 instance isGteFromIs :: (IsEq a b isEq, IsGt a b isGt, Or isEq isGt isGte) => IsGte a b isGte
 
