@@ -9,13 +9,19 @@ Breaking changes:
 
 New features:
 - Replaced monomorphic proxies with `Type.Proxy.Proxy` and polymorphic variables and made `If` and `TypeEquals` polykinded (#64)
+- Added `APPLY`/`$` and `FLIP` type aliases (#63)
+    - The type `Foo (Bar Baz)` is the same as `Foo $ Bar Baz`
+    - The type `Either a b` is the same as `FLIP Either b a`
 
 Bugfixes:
-- Re-add re-exports of `Ordering` and `Boolean` (#55)
 
 Other improvements:
 - Migrated CI to GitHub Actions and updated installation instructions to use Spago (#67)
 - Added a changelog and pull request template (#68, #69)
+
+## [v5.0.2](https://github.com/purescript/purescript-typelevel-prelude/releases/tag/v5.0.2) - 2020-01-18
+
+- Re-adds the re-exports of the Ordering and Boolean kinds to the module `Type.Prelude` (#56)
 
 ## [v5.0.1](https://github.com/purescript/purescript-typelevel-prelude/releases/tag/v5.0.1) - 2019-11-02
 
