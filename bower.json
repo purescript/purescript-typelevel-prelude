@@ -5,7 +5,7 @@
   "license": "BSD-3-Clause",
   "repository": {
     "type": "git",
-    "url": "git://github.com/purescript/purescript-typelevel-prelude.git"
+    "url": "https://github.com/purescript/purescript-typelevel-prelude.git"
   },
   "ignore": [
     "**/.*",
@@ -16,7 +16,7 @@
     "package.json"
   ],
   "dependencies": {
-    "purescript-prelude": "master",
-    "purescript-type-equality": "master"
+    "purescript-prelude": "^5.0.0",
+    "purescript-type-equality": "^4.0.0"
   }
 }
