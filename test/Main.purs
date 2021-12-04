@@ -4,33 +4,34 @@ import Prelude
 
 import Effect (Effect)
 import Effect.Class.Console (log)
-import Type.Data.Symbol (SProxy(..), mirror, snoc)
+import Type.Data.Symbol (mirror, reifySymbol, snoc)
+import Type.Proxy (Proxy(..))
 
 -- mirror
-testMirror :: SProxy "lobmys"
-testMirror = mirror (SProxy::_ "symbol")
+testMirror :: Proxy "lobmys"
+testMirror = mirror (Proxy::_ "symbol")
 
-testMirror1 :: SProxy _
-testMirror1 = mirror (SProxy::_ "symbol")
+testMirror1 :: Proxy _
+testMirror1 = mirror (Proxy::_ "symbol")
 
-testMirror2 :: SProxy "lobmyys"
-testMirror2 = mirror (SProxy :: SProxy _)
+testMirror2 :: Proxy "lobmyys"
+testMirror2 = mirror (Proxy :: Proxy _)
 
 -- snoc
-testSnoc :: SProxy "symbol"
-testSnoc = snoc (SProxy :: SProxy "symbo") (SProxy :: SProxy "l")
+testSnoc :: Proxy "symbol"
+testSnoc = snoc (Proxy :: Proxy "symbo") (Proxy :: Proxy "l")
 
-testSnoc1 :: SProxy _
-testSnoc1 = snoc (SProxy :: SProxy "symbo") (SProxy :: SProxy "l")
+testSnoc1 :: Proxy _
+testSnoc1 = snoc (Proxy :: Proxy "symbo") (Proxy :: Proxy "l")
 
-testSnoc2 :: SProxy "symbol"
-testSnoc2 = snoc (SProxy :: SProxy _) (SProxy :: SProxy "l")
+testSnoc2 :: Proxy "symbol"
+testSnoc2 = snoc (Proxy :: Proxy _) (Proxy :: Proxy "l")
 
-testSnoc3 :: SProxy "symbol"
-testSnoc3 = snoc (SProxy :: SProxy "symbo") (SProxy :: SProxy _)
+testSnoc3 :: Proxy "symbol"
+testSnoc3 = snoc (Proxy :: Proxy "symbo") (Proxy :: Proxy _)
 
-testSnoc4 :: SProxy "s"
-testSnoc4 = snoc (SProxy :: SProxy "") (SProxy :: SProxy "s")
+testSnoc4 :: Proxy "s"
+testSnoc4 = snoc (Proxy :: Proxy "") (Proxy :: Proxy "s")
 
 
 main :: Effect Unit
