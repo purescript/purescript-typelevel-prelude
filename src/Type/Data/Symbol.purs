@@ -1,12 +1,12 @@
 module Type.Data.Symbol
   ( append
   , class Equals
-  , class Mirror
-  , class MirrorP
+  , class Reverse
+  , class ReverseP
   , class Snoc
   , compare
   , equals
-  , mirror
+  , reverse
   , module Data.Symbol
   , module Prim.Symbol
   , snoc
@@ -41,25 +41,30 @@ equals :: forall proxy l r o. Equals l r o => proxy l -> proxy r -> Proxy o
 equals _ _ = Proxy
 
 
--- Mirror
+-- Reverse
 
-class MirrorP (a :: Symbol) (mirror :: Symbol) | a -> mirror, mirror -> a
+class ReverseP (a :: Symbol) (reversed :: Symbol) | a -> reversed, reversed -> a
 
-instance mirrorEmpty :: MirrorP "" ""
+instance reverseEmpty :: ReverseP "" ""
 else
-instance mirrorCons :: 
+instance reverseCons :: 
   ( Cons head tail sym
-  , MirrorP tailMirror tail
-  , MirrorP tail tailMirror
-  , Append tailMirror head mirror
-  ) => MirrorP sym mirror
+  , ReverseP tailReverse tail
+  , ReverseP tail tailReverse
+  , Append tailReverse head reversed
+  ) => ReverseP sym reversed
 
-class Mirror (a :: Symbol) (mirror :: Symbol) | a -> mirror, mirror -> a
+class Reverse (a :: Symbol) (reversed :: Symbol) | a -> reversed, reversed -> a
 
-instance mirrorMirrorP :: (MirrorP a b, MirrorP b a) => Mirror a b
+instance reverseReverseP :: (ReverseP a b, ReverseP b a) => Reverse a b
 
-mirror :: ∀ proxy a b. Mirror a b => proxy a -> Proxy b
-mirror _ = Proxy
+--| ```purescript
+--| > :t reverse (Proxy :: Proxy "symbol")
+--| Proxy @Symbol "lobmys"
+--| ```
+-- | 
+reverse :: ∀ proxy a b. Reverse a b => proxy a -> Proxy b
+reverse _ = Proxy
 
 -- Snoc
 
@@ -70,10 +75,11 @@ mirror _ = Proxy
 -- | `end` must be a single character
 class Snoc (list :: Symbol) (end :: Symbol) (symbol :: Symbol) | end list -> symbol, symbol -> end list
 
-instance snocMirror :: (Mirror sym mirror, Cons end listMirror mirror, Mirror listMirror list) => Snoc list end sym
+instance snocReverse :: (Reverse sym reversed, Cons end listReverse reversed, Reverse listReverse list) => Snoc list end sym
 
 --| ```purescript
---| snoc (Proxy :: Proxy "symbo") (Proxy :: Proxy "l") = Proxy :: Proxy "symbol"
+--| > :t snoc (Proxy :: Proxy "symbo") (Proxy :: Proxy "l")
+--| Proxy @Symbol "symbol"
 --| ```
 snoc :: ∀a b c. Snoc a b c => Proxy a -> Proxy b -> Proxy c
 snoc _ _ = Proxy

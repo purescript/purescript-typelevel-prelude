@@ -4,35 +4,44 @@ import Prelude
 
 import Effect (Effect)
 import Effect.Class.Console (log)
-import Type.Data.Symbol (mirror, reifySymbol, snoc)
+import Prim.Symbol (class Cons)
+import Type.Data.Symbol (class Reverse, class Snoc, reifySymbol, reverse, snoc)
 import Type.Proxy (Proxy(..))
 
--- mirror
-testMirror :: Proxy "lobmys"
-testMirror = mirror (Proxy::_ "symbol")
+-- reverse
+testReverse :: Proxy "lobmys"
+testReverse = reverse (Proxy :: Proxy "symbol")
 
-testMirror1 :: Proxy _
-testMirror1 = mirror (Proxy::_ "symbol")
+testReverseForward :: Proxy _
+testReverseForward = reverse (Proxy:: Proxy "symbol")
 
-testMirror2 :: Proxy "lobmyys"
-testMirror2 = mirror (Proxy :: Proxy _)
+testReverseBackward :: Proxy "lobmyys"
+testReverseBackward = reverse (Proxy :: Proxy _)
+
+testReverseSingle :: Proxy "s"
+testReverseSingle = reverse $ Proxy :: Proxy "s"
+
+testReverseEmpty :: Proxy ""
+testReverseEmpty = reverse $ Proxy :: Proxy ""
 
 -- snoc
 testSnoc :: Proxy "symbol"
 testSnoc = snoc (Proxy :: Proxy "symbo") (Proxy :: Proxy "l")
 
-testSnoc1 :: Proxy _
-testSnoc1 = snoc (Proxy :: Proxy "symbo") (Proxy :: Proxy "l")
+testSnocForward :: Proxy _
+testSnocForward = snoc (Proxy :: Proxy "symbo") (Proxy :: Proxy "l")
 
-testSnoc2 :: Proxy "symbol"
-testSnoc2 = snoc (Proxy :: Proxy _) (Proxy :: Proxy "l")
+testSnocBackwardLeft :: Proxy "symbol"
+testSnocBackwardLeft = snoc (Proxy :: Proxy _) (Proxy :: Proxy "l")
 
-testSnoc3 :: Proxy "symbol"
-testSnoc3 = snoc (Proxy :: Proxy "symbo") (Proxy :: Proxy _)
+testSnocBackwardRight :: Proxy "symbol"
+testSnocBackwardRight = snoc (Proxy :: Proxy "symbo") (Proxy :: Proxy _)
 
-testSnoc4 :: Proxy "s"
-testSnoc4 = snoc (Proxy :: Proxy "") (Proxy :: Proxy "s")
+testSnocBackwardBoth :: Proxy "symbol"
+testSnocBackwardBoth = snoc (Proxy :: Proxy _) (Proxy :: Proxy _)
 
+testSnocEmpty :: Proxy "s"
+testSnocEmpty = snoc (Proxy :: Proxy "") (Proxy :: Proxy "s")
 
 main :: Effect Unit
 main = do
