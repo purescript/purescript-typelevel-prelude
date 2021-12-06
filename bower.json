@@ -18,5 +18,9 @@
   "dependencies": {
     "purescript-prelude": "^5.0.0",
     "purescript-type-equality": "^4.0.0"
+  },
+  "devDependencies": {
+    "purescript-assert": "^5.0.0",
+    "purescript-console": "^5.0.0"
   }
 }

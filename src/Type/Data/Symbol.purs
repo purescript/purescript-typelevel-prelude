@@ -1,12 +1,18 @@
 module Type.Data.Symbol
-  ( module Prim.Symbol
-  , module Data.Symbol
-  , append
-  , compare
-  , uncons
+  ( append
   , class Equals
+  , class Reverse
+  , class ReverseP
+  , class Snoc
+  , compare
   , equals
-  ) where
+  , reverse
+  , module Data.Symbol
+  , module Prim.Symbol
+  , snoc
+  , uncons
+  )
+  where
 
 import Prim.Symbol (class Append, class Compare, class Cons)
 import Data.Symbol (SProxy(..), class IsSymbol, reflectSymbol, reifySymbol)
@@ -33,3 +39,47 @@ instance equalsSymbol
 
 equals :: forall proxy l r o. Equals l r o => proxy l -> proxy r -> Proxy o
 equals _ _ = Proxy
+
+
+-- Reverse
+
+class ReverseP (a :: Symbol) (reversed :: Symbol) | a -> reversed, reversed -> a
+
+instance reverseEmpty :: ReverseP "" ""
+else
+instance reverseCons :: 
+  ( Cons head tail sym
+  , ReverseP tailReverse tail
+  , ReverseP tail tailReverse
+  , Append tailReverse head reversed
+  ) => ReverseP sym reversed
+
+class Reverse (a :: Symbol) (reversed :: Symbol) | a -> reversed, reversed -> a
+
+instance reverseReverseP :: (ReverseP a b, ReverseP b a) => Reverse a b
+
+--| ```purescript
+--| > :t reverse (Proxy :: Proxy "symbol")
+--| Proxy @Symbol "lobmys"
+--| ```
+-- | 
+reverse :: ∀ proxy a b. Reverse a b => proxy a -> Proxy b
+reverse _ = Proxy
+
+-- Snoc
+
+--| ```purescript
+--| Snoc "symbo" "l" ?x ~~> ?x = "symbol"
+--| Snoc ?a ?b "symbol" ~~> ?a = "symbo", ?b = "l"
+--| ```
+-- | `end` must be a single character
+class Snoc (list :: Symbol) (end :: Symbol) (symbol :: Symbol) | end list -> symbol, symbol -> end list
+
+instance snocReverse :: (Reverse sym reversed, Cons end listReverse reversed, Reverse listReverse list) => Snoc list end sym
+
+--| ```purescript
+--| > :t snoc (Proxy :: Proxy "symbo") (Proxy :: Proxy "l")
+--| Proxy @Symbol "symbol"
+--| ```
+snoc :: ∀a b c. Snoc a b c => Proxy a -> Proxy b -> Proxy c
+snoc _ _ = Proxy
