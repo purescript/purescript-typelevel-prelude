@@ -26,13 +26,12 @@ testReverseSingle = reverse $ Proxy :: Proxy "s"
 testReverseEmpty :: Proxy ""
 testReverseEmpty = reverse $ Proxy :: Proxy ""
 
--- or something like this that verifies this is true
+-- Reversing a reversed Symbol should be the same as the Symbol itself
 propReverseIdem :: forall a b . IsSymbol a => IsSymbol b => Reverse a b => Reverse b a => Proxy a -> Boolean
 propReverseIdem p = reflectSymbol p == reflectSymbol sameThing
   where
   sameThing = reverse (reverse p :: Proxy b)
 
--- just confirming that more complex unicode works
 testUnicode :: Proxy "🍎enip"
 testUnicode = reverse (Proxy :: Proxy "pine🍎")
 
