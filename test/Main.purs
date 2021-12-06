@@ -2,10 +2,12 @@ module Test.Main where
 
 import Prelude
 
+import Debug (spy)
 import Effect (Effect)
 import Effect.Class.Console (log)
 import Prim.Symbol (class Cons)
-import Type.Data.Symbol (class Reverse, class Snoc, reifySymbol, reverse, snoc)
+import Test.Assert (assertTrue)
+import Type.Data.Symbol (class IsSymbol, class Reverse, class ReverseP, class Snoc, reflectSymbol, reverse, snoc)
 import Type.Proxy (Proxy(..))
 
 -- reverse
@@ -23,6 +25,16 @@ testReverseSingle = reverse $ Proxy :: Proxy "s"
 
 testReverseEmpty :: Proxy ""
 testReverseEmpty = reverse $ Proxy :: Proxy ""
+
+-- or something like this that verifies this is true
+propReverseIdem :: forall a b . IsSymbol a => IsSymbol b => Reverse a b => Reverse b a => Proxy a -> Boolean
+propReverseIdem p = reflectSymbol p == reflectSymbol sameThing
+  where
+  sameThing = reverse (reverse p :: Proxy b)
+
+-- just confirming that more complex unicode works
+testUnicode :: Proxy "🍎enip"
+testUnicode = reverse (Proxy :: Proxy "pine🍎")
 
 -- snoc
 testSnoc :: Proxy "symbol"
@@ -45,4 +57,7 @@ testSnocEmpty = snoc (Proxy :: Proxy "") (Proxy :: Proxy "s")
 
 main :: Effect Unit
 main = do
-  log "asd"
+  assertTrue $ propReverseIdem (Proxy :: Proxy "Test Symbol")
+  assertTrue $ propReverseIdem (Proxy :: Proxy "Unico∀e")
+  assertTrue $ propReverseIdem (Proxy :: Proxy "<-<>")
+  assertTrue $ propReverseIdem (Proxy :: Proxy "pine🍎")
