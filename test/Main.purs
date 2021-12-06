@@ -59,4 +59,6 @@ main = do
   assertTrue $ propReverseIdem (Proxy :: Proxy "Test Symbol")
   assertTrue $ propReverseIdem (Proxy :: Proxy "Unico∀e")
   assertTrue $ propReverseIdem (Proxy :: Proxy "<-<>")
+  assertTrue $ propReverseIdem (Proxy :: Proxy "")
+  assertTrue $ propReverseIdem (Proxy :: Proxy "1")
   assertTrue $ propReverseIdem (Proxy :: Proxy "pine🍎")
