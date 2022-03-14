@@ -1,6 +1,5 @@
 module Type.Data.Boolean
-  ( BProxy(..)
-  , module Prim.Boolean
+  ( module Prim.Boolean
   , class IsBoolean
   , reflectBoolean
   , reifyBoolean
@@ -17,21 +16,16 @@ module Type.Data.Boolean
 import Prim.Boolean (True, False)
 import Type.Proxy (Proxy(..))
 
--- | Value proxy for `Boolean` types
--- | **Deprecated:** Use `Type.Proxy` instead
-data BProxy :: Boolean -> Type
-data BProxy bool = BProxy
-
 -- | Class for reflecting a type level `Boolean` at the value level
 class IsBoolean :: Boolean -> Constraint
 class IsBoolean bool where
-  reflectBoolean :: forall proxy. proxy bool -> Boolean
+  reflectBoolean :: Proxy bool -> Boolean
 
 instance isBooleanTrue :: IsBoolean True where reflectBoolean _ = true
 instance isBooleanFalse :: IsBoolean False where reflectBoolean _ = false
 
 -- | Use a value level `Boolean` as a type-level `Boolean`
-reifyBoolean :: forall r. Boolean -> (forall proxy o. IsBoolean o => proxy o -> r) -> r
+reifyBoolean :: forall r. Boolean -> (forall o. IsBoolean o => Proxy o -> r) -> r
 reifyBoolean true f = f (Proxy :: Proxy True)
 reifyBoolean false f = f (Proxy :: Proxy False)
 
@@ -41,7 +35,7 @@ class And lhs rhs out | lhs rhs -> out
 instance andTrue :: And True rhs rhs
 instance andFalse :: And False rhs False
 
-and :: forall proxy l r o. And l r o => proxy l -> proxy r -> Proxy o
+and :: forall l r o. And l r o => Proxy l -> Proxy r -> Proxy o
 and _ _ = Proxy
 
 -- | Or two `Boolean` types together
@@ -50,7 +44,7 @@ class Or lhs rhs output | lhs rhs -> output
 instance orTrue :: Or True rhs True
 instance orFalse :: Or False rhs rhs
 
-or :: forall proxy l r o. Or l r o => proxy l -> proxy r -> Proxy o
+or :: forall l r o. Or l r o => Proxy l -> Proxy r -> Proxy o
 or _ _ = Proxy
 
 -- | Not a `Boolean`
@@ -59,7 +53,7 @@ class Not bool output | bool -> output
 instance notTrue :: Not True False
 instance notFalse :: Not False True
 
-not :: forall proxy i o. Not i o => proxy i -> Proxy o
+not :: forall i o. Not i o => Proxy i -> Proxy o
 not _ = Proxy
 
 -- | If - dispatch based on a boolean
@@ -68,5 +62,5 @@ class If bool onTrue onFalse output | bool onTrue onFalse -> output
 instance ifTrue :: If True onTrue onFalse onTrue
 instance ifFalse :: If False onTrue onFalse onFalse
 
-if_ :: forall proxy b t e o. If b t e o => proxy b -> Proxy t -> Proxy e -> Proxy o
+if_ :: forall b t e o. If b t e o => Proxy b -> Proxy t -> Proxy e -> Proxy o
 if_ _ _ _ = Proxy

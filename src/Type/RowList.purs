@@ -1,6 +1,5 @@
 module Type.RowList
   ( module Prim.RowList
-  , module RLProxy
   , class ListToRow
   , class RowListRemove
   , class RowListSet
@@ -13,7 +12,6 @@ import Prim.RowList (RowList, Cons, Nil, class RowToList)
 import Type.Equality (class TypeEquals)
 import Type.Data.Symbol as Symbol
 import Type.Data.Boolean as Boolean
-import Type.Data.RowList (RLProxy(..)) as RLProxy
 
 -- | Convert a RowList to a row of types.
 -- | The inverse of this operation is `RowToList`.
