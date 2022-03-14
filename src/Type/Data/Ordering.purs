@@ -1,6 +1,5 @@
 module Type.Data.Ordering
   ( module PO
-  , OProxy(..)
   , class IsOrdering
   , reflectOrdering
   , reifyOrdering
@@ -17,22 +16,17 @@ import Data.Ordering (Ordering(..))
 import Type.Data.Boolean (True, False)
 import Type.Proxy (Proxy(..))
 
--- | Value proxy for `Ordering` types
--- | **Deprecated:** Use `Type.Proxy` instead
-data OProxy :: PO.Ordering -> Type
-data OProxy ordering = OProxy
-
 -- | Class for reflecting a type level `Ordering` at the value level
 class IsOrdering :: PO.Ordering -> Constraint
 class IsOrdering ordering where
-  reflectOrdering :: forall proxy. proxy ordering -> Ordering
+  reflectOrdering :: Proxy ordering -> Ordering
 
 instance isOrderingLT :: IsOrdering PO.LT where reflectOrdering _ = LT
 instance isOrderingEQ :: IsOrdering PO.EQ where reflectOrdering _ = EQ
 instance isOrderingGT :: IsOrdering PO.GT where reflectOrdering _ = GT
 
 -- | Use a value level `Ordering` as a type-level `Ordering`
-reifyOrdering :: forall r. Ordering -> (forall proxy o. IsOrdering o => proxy o -> r) -> r
+reifyOrdering :: forall r. Ordering -> (forall o. IsOrdering o => Proxy o -> r) -> r
 reifyOrdering LT f = f (Proxy :: Proxy PO.LT)
 reifyOrdering EQ f = f (Proxy :: Proxy PO.EQ)
 reifyOrdering GT f = f (Proxy :: Proxy PO.GT)
@@ -45,7 +39,7 @@ instance appendOrderingLT :: Append PO.LT rhs PO.LT
 instance appendOrderingEQ :: Append PO.EQ rhs rhs
 instance appendOrderingGT :: Append PO.GT rhs PO.GT
 
-append :: forall proxy l r o. Append l r o => proxy l -> proxy r -> Proxy o
+append :: forall l r o. Append l r o => Proxy l -> Proxy r -> Proxy o
 append _ _ = Proxy
 
 -- | Invert an `Ordering`
@@ -55,7 +49,7 @@ instance invertOrderingLT :: Invert PO.LT PO.GT
 instance invertOrderingEQ :: Invert PO.EQ PO.EQ
 instance invertOrderingGT :: Invert PO.GT PO.LT
 
-invert :: forall proxy i o. Invert i o => proxy i -> Proxy o
+invert :: forall i o. Invert i o => Proxy i -> Proxy o
 invert _ = Proxy
 
 class Equals :: PO.Ordering -> PO.Ordering -> Boolean -> Constraint
@@ -71,5 +65,5 @@ instance equalsLTGT :: Equals PO.LT PO.GT False
 instance equalsGTLT :: Equals PO.GT PO.LT False
 instance equalsGTEQ :: Equals PO.GT PO.EQ False
 
-equals :: forall proxy l r o. Equals l r o => proxy l -> proxy r -> Proxy o
+equals :: forall l r o. Equals l r o => Proxy l -> Proxy r -> Proxy o
 equals _ _ = Proxy

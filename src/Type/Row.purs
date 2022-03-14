@@ -1,12 +1,10 @@
 module Type.Row
   ( module Prim.Row
-  , module RProxy
   , RowApply
   , type (+)
   ) where
 
 import Prim.Row (class Lacks, class Nub, class Cons, class Union)
-import Type.Data.Row (RProxy(..)) as RProxy
 
 -- | Type application for rows.
 type RowApply :: forall k. (Row k -> Row k) -> Row k -> Row k
