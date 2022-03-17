@@ -9,6 +9,7 @@ Breaking changes:
 - Replaced polymorphic proxies with monomorphic `Proxy` (#72 by @JordanMartinez)
 
 New features:
+- Added `#` infix operator for `FLIP` (e.g. `Int # Maybe` == `Maybe Int`) (#73 by @JordanMartinez)
 
 Bugfixes:
 
