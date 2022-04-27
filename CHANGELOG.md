@@ -5,6 +5,16 @@ Notable changes to this project are documented in this file. The format is based
 ## [Unreleased]
 
 Breaking changes:
+
+New features:
+
+Bugfixes:
+
+Other improvements:
+
+## [v7.0.0](https://github.com/purescript/purescript-typelevel-prelude/releases/tag/v7.0.0) - 2022-04-27
+
+Breaking changes:
 - Update project and deps to PureScript v0.15.0 (#72 by @JordanMartinez)
 - Replaced polymorphic proxies with monomorphic `Proxy` (#72 by @JordanMartinez)
 
