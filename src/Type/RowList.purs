@@ -26,7 +26,7 @@ instance listToRowCons
      , Row.Cons label ty tailRow row )
   => ListToRow (Cons label ty tail) row
 
--- | Remove all occurences of a given label from a RowList
+-- | Remove all occurrences of a given label from a RowList
 class RowListRemove :: forall k. Symbol -> RowList k -> RowList k -> Constraint
 class RowListRemove label input output | label input -> output
 
@@ -43,7 +43,7 @@ instance rowListRemoveCons
      )
   => RowListRemove label (Cons key head tail) output
 
--- | Add a label to a RowList after removing other occurences.
+-- | Add a label to a RowList after removing other occurrences.
 class RowListSet :: forall k. Symbol -> k -> RowList k -> RowList k -> Constraint
 class RowListSet label typ input output | label typ input -> output
 
