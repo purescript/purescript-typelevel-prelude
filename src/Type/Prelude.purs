@@ -8,10 +8,10 @@ module Type.Prelude
   , module Type.RowList
   ) where
 
-import Type.Data.Boolean (True, False, class IsBoolean, reflectBoolean, reifyBoolean)
-import Type.Data.Ordering (Ordering, LT, EQ, GT, class IsOrdering, reflectOrdering, reifyOrdering)
-import Type.Proxy (Proxy(..))
-import Type.Data.Symbol (class IsSymbol, reflectSymbol, reifySymbol, class Compare, compare, class Append, append)
+import Type.Data.Boolean (class IsBoolean, False, True, reflectBoolean, reifyBoolean)
+import Type.Data.Ordering (class IsOrdering, EQ, GT, LT, Ordering, reflectOrdering, reifyOrdering)
+import Type.Data.Symbol (class Append, class Compare, class IsSymbol, append, compare, reflectSymbol, reifySymbol)
 import Type.Equality (class TypeEquals, from, to)
-import Type.Row (class Union, class Lacks)
-import Type.RowList (class RowToList, class ListToRow)
+import Type.Proxy (Proxy(..))
+import Type.Row (class Lacks, class Union)
+import Type.RowList (class ListToRow, class RowToList)

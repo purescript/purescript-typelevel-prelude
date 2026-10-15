@@ -4,7 +4,7 @@ module Type.Row
   , type (+)
   ) where
 
-import Prim.Row (class Lacks, class Nub, class Cons, class Union)
+import Prim.Row (class Cons, class Lacks, class Nub, class Union)
 
 -- | Type application for rows.
 type RowApply :: forall k. (Row k -> Row k) -> Row k -> Row k

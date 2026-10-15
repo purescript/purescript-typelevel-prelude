@@ -11,9 +11,9 @@ module Type.Data.Ordering
   , equals
   ) where
 
-import Prim.Ordering (LT, EQ, GT, Ordering) as PO
 import Data.Ordering (Ordering(..))
-import Type.Data.Boolean (True, False)
+import Prim.Ordering (EQ, GT, LT, Ordering) as PO
+import Type.Data.Boolean (False, True)
 import Type.Proxy (Proxy(..))
 
 -- | Class for reflecting a type level `Ordering` at the value level
@@ -21,9 +21,14 @@ class IsOrdering :: PO.Ordering -> Constraint
 class IsOrdering ordering where
   reflectOrdering :: Proxy ordering -> Ordering
 
-instance isOrderingLT :: IsOrdering PO.LT where reflectOrdering _ = LT
-instance isOrderingEQ :: IsOrdering PO.EQ where reflectOrdering _ = EQ
-instance isOrderingGT :: IsOrdering PO.GT where reflectOrdering _ = GT
+instance isOrderingLT :: IsOrdering PO.LT where
+  reflectOrdering _ = LT
+
+instance isOrderingEQ :: IsOrdering PO.EQ where
+  reflectOrdering _ = EQ
+
+instance isOrderingGT :: IsOrdering PO.GT where
+  reflectOrdering _ = GT
 
 -- | Use a value level `Ordering` as a type-level `Ordering`
 reifyOrdering :: forall r. Ordering -> (forall o. IsOrdering o => Proxy o -> r) -> r
@@ -35,6 +40,7 @@ reifyOrdering GT f = f (Proxy :: Proxy PO.GT)
 -- | Reflective of the semigroup for value level `Ordering`
 class Append :: PO.Ordering -> PO.Ordering -> PO.Ordering -> Constraint
 class Append lhs rhs output | lhs -> rhs output
+
 instance appendOrderingLT :: Append PO.LT rhs PO.LT
 instance appendOrderingEQ :: Append PO.EQ rhs rhs
 instance appendOrderingGT :: Append PO.GT rhs PO.GT
@@ -45,6 +51,7 @@ append _ _ = Proxy
 -- | Invert an `Ordering`
 class Invert :: PO.Ordering -> PO.Ordering -> Constraint
 class Invert ordering result | ordering -> result
+
 instance invertOrderingLT :: Invert PO.LT PO.GT
 instance invertOrderingEQ :: Invert PO.EQ PO.EQ
 instance invertOrderingGT :: Invert PO.GT PO.LT
