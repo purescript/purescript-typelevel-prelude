@@ -6,7 +6,7 @@ Notable changes to this project are documented in this file. The format is based
 
 Other improvements:
 
-- Migrate from Bower/Pulp to Spago and update CI
+- Migrate from Bower/Pulp to Spago and update CI (#76 by @thomashoneyman)
 - Fix comment typos (#75 by @i-am-the-slime)
 
 ## [v7.0.0](https://github.com/purescript/purescript-typelevel-prelude/releases/tag/v7.0.0) - 2022-04-27
