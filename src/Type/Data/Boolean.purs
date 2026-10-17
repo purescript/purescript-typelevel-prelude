@@ -29,8 +29,9 @@ instance isBooleanFalse :: IsBoolean False where
 
 -- | Use a value level `Boolean` as a type-level `Boolean`
 reifyBoolean :: forall r. Boolean -> (forall o. IsBoolean o => Proxy o -> r) -> r
-reifyBoolean true f = f (Proxy :: Proxy True)
-reifyBoolean false f = f (Proxy :: Proxy False)
+reifyBoolean bool f = case bool of
+  true -> f (Proxy :: Proxy True)
+  false -> f (Proxy :: Proxy False)
 
 -- | And two `Boolean` types together
 class And :: Boolean -> Boolean -> Boolean -> Constraint

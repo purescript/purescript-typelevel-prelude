@@ -35,10 +35,7 @@ instance rowListRemoveNil :: RowListRemove label Nil Nil
 instance rowListRemoveCons ::
   ( RowListRemove label tail tailOutput
   , Symbol.Equals label key eq
-  , Boolean.If eq
-      tailOutput
-      (Cons key head tailOutput)
-      output
+  , Boolean.If eq tailOutput (Cons key head tailOutput) output
   ) =>
   RowListRemove label (Cons key head tail) output
 

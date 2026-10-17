@@ -32,9 +32,10 @@ instance isOrderingGT :: IsOrdering PO.GT where
 
 -- | Use a value level `Ordering` as a type-level `Ordering`
 reifyOrdering :: forall r. Ordering -> (forall o. IsOrdering o => Proxy o -> r) -> r
-reifyOrdering LT f = f (Proxy :: Proxy PO.LT)
-reifyOrdering EQ f = f (Proxy :: Proxy PO.EQ)
-reifyOrdering GT f = f (Proxy :: Proxy PO.GT)
+reifyOrdering ordering f = case ordering of
+  LT -> f (Proxy :: Proxy PO.LT)
+  EQ -> f (Proxy :: Proxy PO.EQ)
+  GT -> f (Proxy :: Proxy PO.GT)
 
 -- | Append two `Ordering` types together
 -- | Reflective of the semigroup for value level `Ordering`
